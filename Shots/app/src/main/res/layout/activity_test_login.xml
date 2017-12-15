@@ -37,15 +37,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <TextView
-                    android:paddingTop="80dp"
-                    android:paddingBottom="40dp"
+                <!--<TextView-->
+                    <!--android:paddingTop="80dp"-->
+                    <!--android:paddingBottom="40dp"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="SHOTS"-->
+                    <!--android:textSize="50sp"-->
+                    <!--android:textColor="#FFFFFF"-->
+                    <!--android:textAlignment="center"/>-->
+
+                <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="SHOTS"
-                    android:textSize="50sp"
-                    android:textColor="#FFFFFF"
-                    android:textAlignment="center"/>
+                    android:layout_height="300dp"
+                    android:background="@drawable/shotslogo"/>
 
             </LinearLayout>
 

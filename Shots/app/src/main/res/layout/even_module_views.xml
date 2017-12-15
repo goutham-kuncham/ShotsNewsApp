@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:weightSum="3"
+    android:layout_margin="2dp">
+
+    <RelativeLayout
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:id="@+id/left_layout"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content">
+        <me.itangqi.waveloadingview.WaveLoadingView
+
+            android:id="@+id/leftWaveLoadingView"
+
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            app:wlv_borderColor="@color/colorAccent"
+            app:wlv_borderWidth="3dp"
+            app:wlv_progressValue="40"
+            app:wlv_shapeType="circle"
+            app:wlv_round_rectangle="true"
+            app:wlv_triangle_direction="north"
+            app:wlv_titleCenterStrokeColor="@android:color/holo_blue_dark"
+            app:wlv_titleCenterStrokeWidth="0dp"
+            app:wlv_titleCenter="Machine Learning"
+            app:wlv_titleBottom="26%"
+            app:wlv_titleCenterColor="#3FFF00FF"
+            app:wlv_titleCenterSize="13sp"
+            app:wlv_waveAmplitude="70"
+            app:wlv_waveColor="@color/colorAccent"/>
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_marginTop="5dp"
+        android:id="@+id/center_layout"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content">
+        <me.itangqi.waveloadingview.WaveLoadingView
+
+            android:id="@+id/centerWaveLoadingView"
+
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            app:wlv_borderColor="@color/colorAccent"
+            app:wlv_borderWidth="3dp"
+            app:wlv_progressValue="40"
+            app:wlv_shapeType="circle"
+            app:wlv_round_rectangle="true"
+            app:wlv_triangle_direction="north"
+            app:wlv_titleCenterStrokeColor="@android:color/holo_blue_dark"
+            app:wlv_titleCenterStrokeWidth="0dp"
+            app:wlv_titleCenter="Machine Learning"
+            app:wlv_titleBottom="26%"
+            app:wlv_titleCenterColor="#3FFF00FF"
+            app:wlv_titleCenterSize="13sp"
+            app:wlv_waveAmplitude="70"
+            app:wlv_waveColor="@color/colorAccent"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:id="@+id/right_layout"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content">
+        <me.itangqi.waveloadingview.WaveLoadingView
+
+            android:id="@+id/rightWaveLoadingView"
+
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            app:wlv_borderColor="@color/colorAccent"
+            app:wlv_borderWidth="3dp"
+            app:wlv_progressValue="40"
+            app:wlv_shapeType="circle"
+            app:wlv_round_rectangle="true"
+            app:wlv_triangle_direction="north"
+            app:wlv_titleCenterStrokeColor="@android:color/holo_blue_dark"
+            app:wlv_titleCenterStrokeWidth="0dp"
+            app:wlv_titleCenter="Machine Learning"
+            app:wlv_titleBottom="26%"
+            app:wlv_titleCenterColor="#3FFF00FF"
+            app:wlv_titleCenterSize="13sp"
+            app:wlv_waveAmplitude="70"
+            app:wlv_waveColor="@color/colorAccent"/>
+
+    </RelativeLayout>
+
+
+</LinearLayout>

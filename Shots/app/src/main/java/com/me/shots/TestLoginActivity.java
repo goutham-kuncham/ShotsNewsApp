@@ -2,6 +2,7 @@ package com.me.shots;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -28,20 +29,32 @@ public class TestLoginActivity extends AppCompatActivity {
 
     String LOGIN_API_URL = "http://ec2-52-14-50-89.us-east-2.compute.amazonaws.com/api/auth";
     String LOGIN_result;
-
+    SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_login);
 
-        Button loginbtn= (Button)findViewById(R.id.loginbtn);
-        loginbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                login();
-            }
-        });
+        sharedPreferences=getSharedPreferences("MYSHAREDPREFERENCES",MODE_PRIVATE);
+        String name=sharedPreferences.getString("email",null);
+        String pass=sharedPreferences.getString("password",null);
 
+
+        if (!(name == null || pass == null)) {
+            Log.e("mytag","sharedprefworking======"+name+"-----"+pass);
+            Intent homeint=new Intent(this,HomeActivity.class);
+            startActivity(homeint);}
+            else {
+            Log.e("mytag","sharedprefnottttttttworking======"+name+"-----"+pass);
+
+            Button loginbtn = (Button) findViewById(R.id.loginbtn);
+            loginbtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    login();
+                }
+            });
+        }
 
     }
 
@@ -56,43 +69,50 @@ public class TestLoginActivity extends AppCompatActivity {
 
         Log.e("mytag","1");
 
-        if(isNetworkAvailable())
-        {
-            Log.e("mytag","2");
 
-            try {
-                Log.e("mytag","3");
+        if(isNetworkAvailable()) {
 
-                LOGIN_result=new SignInValidation().execute(API_URL).get();
 
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
+                 {
 
-            Toast.makeText(this,"Value -"+LOGIN_result,Toast.LENGTH_LONG).show();
-            if(LOGIN_result.equals("False"))
-            {
-                usernametxt.setError("Wrong Credentials..");
-                passwordtxt.setError("Wrong Credentials..");
+                Log.e("mytag", "2");
 
-            }else {
-                usernametxt.setError(null);
-                passwordtxt.setError(null);
-                Intent homeintent =new Intent(this,HomeActivity.class);
+                try {
+                    Log.e("mytag", "3");
+
+                    LOGIN_result = new SignInValidation().execute(API_URL).get();
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+
+                Toast.makeText(this, "Value -" + LOGIN_result, Toast.LENGTH_LONG).show();
+                if (LOGIN_result.equals("False")||LOGIN_result.equalsIgnoreCase("error")) {
+                    usernametxt.setError("Wrong Credentials..");
+                    passwordtxt.setError("Wrong Credentials..");
+
+                } else {
+                    usernametxt.setError(null);
+                    passwordtxt.setError(null);
+                    SharedPreferences.Editor editor=sharedPreferences.edit();
+                    editor.putString("email",username);
+                    editor.putString("password",password);
+
+                    editor.apply();
+                    Intent homeintent = new Intent(this, HomeActivity.class);
                     startActivity(homeintent);
+                }
 
             }
-
         }
         else
-        {
-            Log.e("mytag","3");
-            Toast.makeText(this,"Network Not available",Toast.LENGTH_LONG).show();
+            {
+                Log.e("mytag", "3");
+                Toast.makeText(this, "Network Not available", Toast.LENGTH_LONG).show();
 
-        }
-
+            }
 
     }
 

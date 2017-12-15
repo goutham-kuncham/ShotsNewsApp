@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.me.shots"
         minSdkVersion 19
@@ -29,5 +29,13 @@ dependencies {
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support:support-v4:25.3.1'
     compile 'com.google.android.gms:play-services-plus:11.0.2'
+    compile 'com.android.support:recyclerview-v7:25.1.0'
+    compile 'com.android.support:cardview-v7:25.1.0'
+    compile 'com.android.volley:volley:1.0.0'
+    compile 'com.squareup.okhttp:okhttp:2.5.0'
+    compile 'org.jsoup:jsoup:1.7.3'
+    compile 'com.github.lzyzsd:circleprogress:1.2.1'  //not used
+    compile 'me.itangqi.waveloadingview:library:0.3.5'
+
     testCompile 'junit:junit:4.12'
 }
