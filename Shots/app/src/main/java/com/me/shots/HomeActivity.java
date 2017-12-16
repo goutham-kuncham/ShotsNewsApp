@@ -69,21 +69,21 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 btnclick(view);
-                getDetails();
+            //    getDetails();
             }
         });
         explore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 btnclick(view);
-            getDetails();
+          //  getDetails();
             }
         });
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 btnclick(view);
-               getDetails();
+             //  getDetails();
 
             }
         });
@@ -91,7 +91,7 @@ public class HomeActivity extends AppCompatActivity {
         getImage();
 
 }
-void getDetails()
+void getDetails()                                                                                    //personal details
 {
     JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url,null, new Response.Listener<JSONObject>() {
         @Override
@@ -114,14 +114,12 @@ void getDetails()
                 editor.putString("designation",position);
                 editor.putString("mip",modules_in_progress);
                 editor.putInt("karma",karma);
-
                 editor.apply();
                 Log.e("nickname",nickname+"lol");
                 Log.e("nickname_orga",organization+"lol");
                 Log.e("nickname_posi",position+"Lol");
                 Log.e("nickname_id",id+"LOL");
-
-
+               getOrgaDetails();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -137,9 +135,44 @@ void getDetails()
     queue.add(jsonObjectRequest);
 
 }
-    void getImage()
+void getOrgaDetails()                                                                                 //organization details
+{
+    JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET,"http://ec2-52-14-50-89.us-east-2.compute.amazonaws.com/api/organization",null, new Response.Listener<JSONObject>() {               //if you want to edit the organisation name in future use organisation/ followed by filter using organization_id obtained in getDetails
+        @Override
+        public void onResponse(JSONObject response) {
+            Log.e("Respone",response.toString());
+            try {
+                Log.e("hii","HII");
+                JSONArray obj_array= response.getJSONArray("objects");
+                JSONObject myobj=obj_array.getJSONObject(0);
+                String organization_name=myobj.getString("name");
+                String body=myobj.getString("body");
+                String ceo=myobj.getString("ceo");
+                String cto=myobj.getString("cto");
+                Log.e("Cto",cto+"lol");
+                SharedPreferences.Editor editor=sharedPreferences.edit();
+                editor.putString("orga_name",organization_name);
+                editor.putString("orga_body",body);
+                editor.putString("orga_ceo",ceo);
+                editor.putString("orga_cto",cto);
+                editor.apply();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }, new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            Toast.makeText(context,"Error response ",Toast.LENGTH_SHORT).show();
+        }
+    });
+    RequestQueue queue= Volley.newRequestQueue(context);
+    queue.add(jsonObjectRequest);
+}
+    void getImage()                                                                                 //profile pic
     {
-        ImageRequest request = new ImageRequest("http://ec2-52-14-50-89.us-east-2.compute.amazonaws.com/static/userdata/thumb.png",     ///"+email+" in btw userdata/  /thumb.png
+        ImageRequest request = new ImageRequest("http://ec2-52-14-50-89.us-east-2.compute.amazonaws.com/static/userdata/"+email+"/thumb.png",     ///"+email+" in btw userdata/  /thumb.png
                 new Response.Listener<Bitmap>() {
                     @Override
                     public void onResponse(Bitmap bitmap) {
@@ -154,7 +187,10 @@ void getDetails()
                         Log.e("Home_Acitivity","No img found");
                     }
                 });
-        MySingleton.getMyInstance(getApplicationContext()).addToReqQue(request);
+//        MySingleton.getMyInstance(getApplicationContext()).addToReqQue(request);
+        RequestQueue queue= Volley.newRequestQueue(context);
+        queue.add(request);
+
 
     }
 

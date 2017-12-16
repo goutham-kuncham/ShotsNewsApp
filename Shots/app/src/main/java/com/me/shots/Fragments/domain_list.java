@@ -43,6 +43,7 @@ public class domain_list extends Fragment {
 String name,url;
 public static String nickname;
 int id_selected;
+
     public domain_list() {
         // Required empty public constructor
     }

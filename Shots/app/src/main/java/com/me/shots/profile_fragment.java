@@ -9,6 +9,8 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -71,7 +73,16 @@ public class profile_fragment extends Fragment {
         name.setText(nickname);
         position.setText(designation);
         company.setText(organizationname);
-
+        AYO.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment fragment=new OrganisationFragment();
+                FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.homeFrame_PlaceHolder,fragment);
+                fragmentTransaction.commit();
+            }
+        });
         domain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

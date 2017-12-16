@@ -1,0 +1,94 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.me.shots.OrganisationFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="10"
+        android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0sp"
+        android:layout_weight="1"
+        android:text="About your Organization"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textColor="#0d0d0d"/>
+     <View
+         android:layout_width="match_parent"
+         android:layout_height="0sp"
+         android:layout_weight=".5"
+         />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0sp"
+            android:layout_weight="1"
+            android:id="@+id/orga_name"
+            android:textSize="20sp"
+            android:textColor="#0d0d0d"
+            android:text="Spacex"
+            android:textStyle="bold"
+            android:gravity="center_vertical"
+            android:paddingLeft="30sp"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0sp"
+            android:layout_weight=".5"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0sp"
+            android:layout_weight="2"
+            android:id="@+id/orga_body"
+            android:textSize="18sp"
+            android:textColor="#0d0d0d"
+            android:text="SpaceX designs, manufactures and launches advanced rockets and spacecraft."
+            android:paddingLeft="30sp"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0sp"
+            android:layout_weight=".5"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0sp"
+            android:layout_weight="1"
+            android:id="@+id/orga_exebody"
+            android:textSize="16sp"
+            android:textColor="#0d0d0d"
+            android:text="Executive Body"
+            android:gravity="center_vertical"
+            android:textStyle="bold"
+            android:paddingLeft="30sp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0sp"
+            android:layout_weight="1"
+            android:id="@+id/orga_ceo"
+            android:textSize="16sp"
+            android:textColor="#0d0d0d"
+            android:text="CEO  -"
+            android:gravity="center_vertical"
+            android:paddingLeft="30sp"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0sp"
+            android:layout_weight="1"
+            android:id="@+id/orga_cto"
+            android:textSize="16sp"
+            android:textColor="#0d0d0d"
+            android:text="CTO  -"
+            android:gravity="center_vertical"
+            android:paddingLeft="30sp"
+            />
+    </LinearLayout>
+</FrameLayout>

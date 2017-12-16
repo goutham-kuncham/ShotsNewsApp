@@ -67,7 +67,7 @@ public class On_going_Courses_Fragment extends android.support.v4.app.Fragment {
         while (st.hasMoreTokens()) {
             in_progress_courses.add(st.nextElement().toString());
         }
-        if(in_progress_courses.get(0).equals("null"))
+        if(in_progress_courses.size()==0)
         {
             in_progress_courses.clear();
 
@@ -101,9 +101,24 @@ public class On_going_Courses_Fragment extends android.support.v4.app.Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 TextView textView=(TextView)view.findViewById(R.id.mydomain);
                 //  Toast.makeText(getContext(),textView.getText(),Toast.LENGTH_SHORT).show();
-
-                Log.e("mytag","http://ec2-52-14-50-89.us-east-2.compute.amazonaws.com/api/courses?q={\"filters\":[{\"name\":\"domain\",\"op\":\"eq\",\"val\":\"" + textView.getText().toString() + "\"}]}");
-               String url="http://ec2-52-14-50-89.us-east-2.compute.amazonaws.com/api/courses?q={\"filters\":[{\"name\":\"domain\",\"op\":\"eq\",\"val\":\""+textView.getText().toString()+"\"}]}";
+                String course_name="";
+                StringTokenizer tokenizer=new StringTokenizer(textView.getText().toString()," ");
+                ArrayList <String> tokens=new ArrayList<>();
+                while (tokenizer.hasMoreTokens())
+                {
+                    tokens.add(tokenizer.nextToken());
+                }
+                for(int j=0;j<tokens.size();j++)
+                {
+                    if(j==tokens.size()-1)
+                    {
+                        course_name+=tokens.get(j);
+                    }
+                    else
+                        course_name+=tokens.get(j)+"%20";
+                }
+                Log.e("mytag","http://ec2-52-14-50-89.us-east-2.compute.amazonaws.com/api/courses?q={\"filters\":[{\"name\":\"domain\",\"op\":\"eq\",\"val\":\"" +course_name+ "\"}]}");
+               String url="http://ec2-52-14-50-89.us-east-2.compute.amazonaws.com/api/courses?q={\"filters\":[{\"name\":\"domain\",\"op\":\"eq\",\"val\":\""+course_name+"\"}]}";
                 final Fragment fragment=new domain_list();
                 final Bundle args = new Bundle();
                 args.putString("Domain_Name", textView.getText().toString());
