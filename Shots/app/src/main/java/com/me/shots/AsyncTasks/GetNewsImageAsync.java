@@ -2,6 +2,7 @@ package com.me.shots.AsyncTasks;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -14,6 +15,12 @@ import com.android.volley.toolbox.ImageRequest;
 import com.*;
 import com.me.shots.Utils.MySingleton;
 import com.me.shots.Utils.NewsPOGO;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
 
 /**
  * Created by Half_BlooD PrincE on 10/9/2017.
@@ -69,3 +76,5 @@ public class GetNewsImageAsync extends AsyncTask {
         super.onPostExecute(o);
     }
 }
+
+

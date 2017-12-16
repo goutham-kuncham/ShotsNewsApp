@@ -36,14 +36,7 @@ public class On_going_Courses_Fragment extends android.support.v4.app.Fragment {
         ListView listView = (ListView)view.findViewById(R.id.list_display);
         ListViewAdapter listAdapter = new ListViewAdapter(getActivity(),sv);
         listView.setAdapter(listAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-
-
-            }
-        });
         return view;
 
     }

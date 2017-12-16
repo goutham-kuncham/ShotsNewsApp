@@ -24,7 +24,8 @@ public class NewsPOGO {
     public String title;
     public String types;
     public int user_id;
-    public Bitmap news_image;
+    public Bitmap news_image=null;
+    public Bitmap blurred_news_image=null;
 
     public NewsPOGO()
     {

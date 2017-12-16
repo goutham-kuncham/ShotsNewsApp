@@ -41,7 +41,10 @@ public class HomeActivity extends AppCompatActivity {
 
         url="http://ec2-52-14-50-89.us-east-2.compute.amazonaws.com/api/user?q={\"filters\":[{\"name\":\"email\",\"op\":\"eq\",\"val\":"+email+"}]}";
 
-
+        FragmentManager fragmentManager=getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.homeFrame_PlaceHolder,new NewsFragment(this));
+        fragmentTransaction.commit();
 
 //        fragment=new NewsFragment(this);
 //        FragmentManager fragmentManager=getSupportFragmentManager();
