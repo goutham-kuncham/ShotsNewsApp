@@ -1,6 +1,5 @@
 package com.me.shots.Fragments;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,8 +13,6 @@ import com.*;
 import com.me.shots.Adapter.VerticalViewPager;
 import com.me.shots.AsyncTasks.GetNewsAsync;
 import com.me.shots.R;
-
-import java.util.concurrent.ExecutionException;
 //
 //import com.shorts.jgirish.snu_pro.Adapter.VerticalViewPager;
 //import com.shorts.jgirish.snu_pro.AsyncTasks.AsyncTasks.GetNewsAsync;
@@ -29,7 +26,6 @@ import java.util.concurrent.ExecutionException;
  * Created by Half_BlooD PrincE on 10/9/2017.
  */
 
-@SuppressLint("ValidFragment")
 public class NewsFragment extends Fragment {
 
     Context context;
@@ -47,11 +43,7 @@ public class NewsFragment extends Fragment {
         VerticalViewPager viewPager= (VerticalViewPager) view.findViewById(R.id.viewPager);
         Log.d("Tagged", "onCreateView: ");
         GetNewsAsync get=new GetNewsAsync(context,view);
-        try {
-            get.execute().get();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        get.execute();
         Log.d("Mytag", "onCreateView: after view pager");
         return view;
     }

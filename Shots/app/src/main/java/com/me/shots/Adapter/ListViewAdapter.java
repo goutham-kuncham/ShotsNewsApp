@@ -71,6 +71,7 @@ public class ListViewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+        final int k=i;
         View lview= LayoutInflater.from(context).inflate(R.layout.listview_box,null);
         scrollView.setScrollX(0);
         scrollView.setScrollY(0);
@@ -85,8 +86,8 @@ public class ListViewAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View  Lview) {
                     Log.e("hrllol","hrllo");
-                    Log.e("url",url+"lololol");
-                    StringRequest stringRequest = new StringRequest(Request.Method.GET,  "http://ec2-52-14-50-89.us-east-2.compute.amazonaws.com/api/courseinprogress/"+domain_list.nickname+"/"+On_going_Courses_Fragment.courses_list.get(i).getId()",
+                   Log.e("url","http://ec2-52-14-50-89.us-east-2.compute.amazonaws.com/api/courseinprogress/"+domain_list.nickname+"/"+On_going_Courses_Fragment.courses_list.get(k).getId());
+                    StringRequest stringRequest = new StringRequest(Request.Method.GET,  "http://ec2-52-14-50-89.us-east-2.compute.amazonaws.com/api/courseinprogress/"+domain_list.nickname+"/"+On_going_Courses_Fragment.courses_list.get(k).getId(),
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {

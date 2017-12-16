@@ -1,10 +1,15 @@
 package com.me.shots;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,14 +18,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
+import com.me.shots.Utils.MySingleton;
+
+import java.io.ByteArrayOutputStream;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * Created by J Girish on 09-10-2017.
  */
 
 public class profile_fragment extends Fragment {
-
+    String nickname;
+    CircleImageView imageView;
     SharedPreferences sharedPreferences;
-
     public profile_fragment() {
 
     }
@@ -31,11 +45,13 @@ public class profile_fragment extends Fragment {
 
         sharedPreferences=getActivity().getSharedPreferences("MYSHAREDPREFERENCES", Context.MODE_PRIVATE);
         String uname=sharedPreferences.getString("username",null);
-        String nickname=sharedPreferences.getString("nickname","Elon Musk");
+        nickname=sharedPreferences.getString("nickname","Elon Musk");
         String designation=sharedPreferences.getString("designation","CEO & CTO");
         String organizationname=sharedPreferences.getString("organizationname","SpaceX Tech.");
-
+        String profilepic=sharedPreferences.getString("profilepic",null);
+        int karma=sharedPreferences.getInt("karma",1);
         Log.e("mytag","nickname==="+nickname);
+        Log.e("mytag","Profilepic==="+profilepic+"lol");
 
         //return inflater.inflate(R.layout.fragment_calls, container, false);
         View view = inflater.inflate(R.layout.profile_fragment, container, false);
@@ -50,8 +66,8 @@ public class profile_fragment extends Fragment {
         TextView notifications=(TextView)view.findViewById(R.id.notifications);
         TextView AYO=(TextView)view.findViewById(R.id.AYO);
         TextView Logout=(TextView)view.findViewById(R.id.Logout);
-        ImageView imageView =(ImageView)view.findViewById(R.id.pro_pic);
-
+        imageView =(CircleImageView)view.findViewById(R.id.SetPic);
+        KP.setText(karma+"");
         name.setText(nickname);
         position.setText(designation);
         company.setText(organizationname);
@@ -62,18 +78,24 @@ public class profile_fragment extends Fragment {
                 Toast.makeText(getActivity(),"Domain",Toast.LENGTH_SHORT).show();
             }
         });
-       imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(getContext(),Profile_Pic.class);
-                startActivity(intent);
-
-
-
-
-            }
-        });
+//       imageView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent=new Intent(getContext(),Profile_Pic.class);
+//                startActivity(intent);
+//
+//
+//
+//
+//            }
+//        });
+        while (HomeActivity.pro==null)
+        {
+        }
+           imageView.setImageBitmap(HomeActivity.pro);
 
         return view;
     }
+
+
 }

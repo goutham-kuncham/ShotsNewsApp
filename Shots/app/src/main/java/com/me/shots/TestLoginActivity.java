@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -75,7 +74,7 @@ public class TestLoginActivity extends AppCompatActivity {
 
                  {
 
-                Log.e("mytag", "2");
+                Log.e("mytag", "");
 
                 try {
                     Log.e("mytag", "3");

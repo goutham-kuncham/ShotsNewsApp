@@ -5,29 +5,21 @@
     android:layout_height="match_parent">
 
     <android.support.v7.widget.CardView
+        android:focusable="false"
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view"
         android:layout_width="match_parent"
-        android:layout_height="140dp"
+        android:layout_height="120dp"
         android:layout_margin="10dp"
         android:background="#fcdcdc"
         card_view:cardCornerRadius="11dp">
 
         <RelativeLayout
+            android:focusable="false"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        <TextView
-            android:id="@+id/info_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="14dp"
-            android:textColor="#000000"
-            android:paddingLeft="14dp"
-            android:textStyle="bold"
-            android:layout_margin="20dp"
-            android:text="Course Name"/>
-
             <TextView
+                android:id="@+id/info_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="14dp"
@@ -35,12 +27,15 @@
                 android:paddingLeft="14dp"
                 android:textStyle="bold"
                 android:layout_margin="20dp"
-                android:layout_centerInParent="true"
-                android:text="Professor Name"
-                />
+                android:text="Course Name"/>
+
+
 
             <Button
+                android:id="@+id/mycontinue"
                 android:layout_margin="10dp"
+                android:focusable="true"
+                android:clickable="true"
                 android:layout_width="wrap_content"
                 android:layout_height="30sp"
                 android:layout_alignParentEnd="true"

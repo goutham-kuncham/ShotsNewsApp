@@ -10,7 +10,7 @@
         android:id="@+id/homeFrame_PlaceHolder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/homebg"
+        android:background="#ffffff"
         android:layout_above="@+id/buttonsrow2"></FrameLayout>
     <!--<LinearLayout-->
         <!--android:id="@+id/buttonsRow1"-->
