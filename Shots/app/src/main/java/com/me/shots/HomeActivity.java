@@ -31,6 +31,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.util.StringTokenizer;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -106,6 +107,11 @@ void getDetails()                                                               
                 String position=myobj.getString("designation");
                 String id=Integer.toString(myobj.getInt("id"));
                 String modules_in_progress=myobj.getString("modules_in_progress");
+                String modules_completed=myobj.getString("modules_completed");
+                StringTokenizer mip_tokenizer=new StringTokenizer(modules_in_progress,",");
+                StringTokenizer mc_tTokenizer=new StringTokenizer(modules_completed,",");
+                int mip_count=mip_tokenizer.countTokens();
+                int mc_count=mc_tTokenizer.countTokens();
                 int karma=myobj.getInt("karma");
                 SharedPreferences.Editor editor=sharedPreferences.edit();
                 editor.putString("userid",id);
@@ -113,6 +119,9 @@ void getDetails()                                                               
                 editor.putString("organizationname",organization);
                 editor.putString("designation",position);
                 editor.putString("mip",modules_in_progress);
+                editor.putString("mc",modules_completed);
+                editor.putInt("mip_count",mip_count);
+                editor.putInt("mc_count",mc_count);
                 editor.putInt("karma",karma);
                 editor.apply();
                 Log.e("nickname",nickname+"lol");
@@ -212,6 +221,29 @@ void getOrgaDetails()                                                           
         FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.homeFrame_PlaceHolder,fragment);
         fragmentTransaction.commit();
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        final Dialog dialog = new Dialog(HomeActivity.this,R.style.Theme_AppCompat_Light_Dialog_Alert);
+        dialog.setContentView(R.layout.exit_dialogue);
+        Button cancel=(Button)dialog.findViewById(R.id.cancel_dia);
+        dialog.show();
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        Button exit=(Button)dialog.findViewById(R.id.exit_dia);
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {// super.onBackPressed();
+                finish();
+            }
+        });
+        dialog.show();
 
     }
 

@@ -42,7 +42,8 @@ public class TestLoginActivity extends AppCompatActivity {
         if (!(name == null || pass == null)) {
             Log.e("mytag","sharedprefworking======"+name+"-----"+pass);
             Intent homeint=new Intent(this,HomeActivity.class);
-            startActivity(homeint);}
+            startActivity(homeint);
+        finish();}
             else {
             Log.e("mytag","sharedprefnottttttttworking======"+name+"-----"+pass);
 
@@ -102,6 +103,7 @@ public class TestLoginActivity extends AppCompatActivity {
                     editor.apply();
                     Intent homeintent = new Intent(this, HomeActivity.class);
                     startActivity(homeintent);
+                    finish();
                 }
 
             }

@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,6 +52,11 @@ public class profile_fragment extends Fragment {
         String designation=sharedPreferences.getString("designation","CEO & CTO");
         String organizationname=sharedPreferences.getString("organizationname","SpaceX Tech.");
         String profilepic=sharedPreferences.getString("profilepic",null);
+        int mip_count=sharedPreferences.getInt("mip_count",0);
+        Log.e("mip_count",mip_count+"");
+
+        int mc_count=sharedPreferences.getInt("mc_count",0);
+        Log.e("mc_count",mc_count+"");
         int karma=sharedPreferences.getInt("karma",1);
         Log.e("mytag","nickname==="+nickname);
         Log.e("mytag","Profilepic==="+profilepic+"lol");
@@ -70,6 +76,8 @@ public class profile_fragment extends Fragment {
         TextView Logout=(TextView)view.findViewById(R.id.Logout);
         imageView =(CircleImageView)view.findViewById(R.id.SetPic);
         KP.setText(karma+"");
+        MIP.setText(mip_count+"");
+        MC.setText(mc_count+"");
         name.setText(nickname);
         position.setText(designation);
         company.setText(organizationname);
@@ -83,7 +91,19 @@ public class profile_fragment extends Fragment {
                 fragmentTransaction.commit();
             }
         });
-        domain.setOnClickListener(new View.OnClickListener() {
+        bookmarks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(),"Bookmarks",Toast.LENGTH_SHORT).show();
+            }
+        });
+        notifications.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(),"Notification",Toast.LENGTH_SHORT).show();
+            }
+        });
+        bookmarks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getActivity(),"Domain",Toast.LENGTH_SHORT).show();
@@ -100,6 +120,39 @@ public class profile_fragment extends Fragment {
 //
 //            }
 //        });
+        Logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Dialog dialog = new Dialog(getContext(),R.style.Theme_AppCompat_Light_Dialog_Alert);
+                dialog.setContentView(R.layout.exit_dialogue);
+                TextView text=(TextView)dialog.findViewById(R.id.text_dia);
+                text.setText("Do you really whish to Logout?");
+                Button cancel=(Button)dialog.findViewById(R.id.cancel_dia);
+                dialog.show();
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+                Button exit=(Button)dialog.findViewById(R.id.exit_dia);
+                exit.setText("Logout");
+                exit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // super.onBackPressed();
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.clear();
+                        editor.commit();
+                        getActivity().finish();
+                        Intent intent=new Intent(getContext(),TestLoginActivity.class);
+                        startActivity(intent);
+
+                    }
+                });
+                dialog.show();
+            }
+        });
         while (HomeActivity.pro==null)
         {
         }
