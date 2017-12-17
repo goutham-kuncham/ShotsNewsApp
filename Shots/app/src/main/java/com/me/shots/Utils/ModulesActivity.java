@@ -35,12 +35,30 @@ public class ModulesActivity extends AppCompatActivity {
     String MYURL="http://ec2-52-14-50-89.us-east-2.compute.amazonaws.com/static/courses/Intro%20to%20Machine%20Learning";
     int modulecount=0;
     String[] modulenames=null;
+    String link="http://ec2-52-14-50-89.us-east-2.compute.amazonaws.com/static/courses/Intro to Machine Learning/1.pptx,http://ec2-52-14-50-89.us-east-2.compute.amazonaws.com/static/courses/Intro to Machine Learning/2.pptx,http://ec2-52-14-50-89.us-east-2.compute.amazonaws.com/static/courses/Intro to Machine Learning/3.pptx,";
+    String coursetitle="Intro to Machine Learning";
+    String []courselinks=null;
+    String temp1[]=null;
+    String temp2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modules);
 
-        try {
+        Intent intent=getIntent();
+        Bundle b=intent.getBundleExtra("mybundle");
+        link=b.getString("link");
+        courselinks=link.split(",");
+        modulecount=courselinks.length;
+        modulenames=new String[modulecount];
+        for(int i=0;i<modulecount;i++) {
+            temp1 = courselinks[i].split("/");
+            temp2 = temp1[temp1.length - 1];
+            modulenames[i] = temp2;
+        }
+
+
+        /*try {
             String responseData=new CallingHTML().execute(MYURL).get();
 
             if(responseData.equalsIgnoreCase("error")){
@@ -61,24 +79,24 @@ public class ModulesActivity extends AppCompatActivity {
                     modulenames[i]=doc.select("a").get(5+i).text();
                     Log.e("mytag", "onCreate: "+modulenames[i]+"======"+i );
                 }
-
-                ListAdapter listAdapter=new ModuleAdapter(modulecount,modulenames,getApplicationContext());
-                ListView listView= (ListView) findViewById(R.id.modules_listview);
-                    listView.setAdapter(listAdapter);
-                    listView.setEnabled(false);
-                listView.setFocusable(false);
-
-
-            }
+*/
+        ListAdapter listAdapter=new ModuleAdapter(modulecount,modulenames,getApplicationContext());
+        ListView listView= (ListView) findViewById(R.id.modules_listview);
+        listView.setAdapter(listAdapter);
+        listView.setEnabled(false);
+        listView.setFocusable(false);
 
 
-        } catch (InterruptedException e) {
+    }
+
+
+  /*      } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
 
-    }
+    }*/
 
     class CallingHTML extends AsyncTask<String,Void,String>
     {
@@ -104,7 +122,7 @@ public class ModulesActivity extends AppCompatActivity {
                 connection.setConnectTimeout(CONNECTION_TIMEOUT);
 
                 connection.connect();
-               responsecode=connection.getResponseCode();
+                responsecode=connection.getResponseCode();
                 Log.e("mytag", "doInBackground: "+responsecode );
                 InputStreamReader streamReader = new
                         InputStreamReader(connection.getInputStream());
@@ -131,9 +149,9 @@ public class ModulesActivity extends AppCompatActivity {
             }
 
             Log.e("mytag", "doInBackground: "+result );
-                if(responsecode==200)
+            if(responsecode==200)
                 return result;
-           else return "error";
+            else return "error";
         }
 
         @Override

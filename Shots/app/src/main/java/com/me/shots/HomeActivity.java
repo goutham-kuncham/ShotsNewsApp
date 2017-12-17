@@ -41,6 +41,7 @@ public class HomeActivity extends AppCompatActivity {
     Fragment fragment=null;
     static Bitmap pro;
     String email;
+    int karma=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,7 +113,12 @@ void getDetails()                                                               
                 StringTokenizer mc_tTokenizer=new StringTokenizer(modules_completed,",");
                 int mip_count=mip_tokenizer.countTokens();
                 int mc_count=mc_tTokenizer.countTokens();
-                int karma=myobj.getInt("karma");
+                String karmapoints=myobj.getString("karma")+"";
+                if(karmapoints.equalsIgnoreCase("null")) karma=0;
+                else
+                 karma=myobj.getInt("karma");
+
+                Log.e("mytag1", "onResponse: karmaaaaaaaaaaaaaaaaaaaaaaaaaaaa "+karma+"====="+karmapoints );
                 SharedPreferences.Editor editor=sharedPreferences.edit();
                 editor.putString("userid",id);
                 editor.putString("nickname",nickname);

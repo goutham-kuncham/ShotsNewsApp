@@ -25,8 +25,9 @@ public class ModuleAdapter extends BaseAdapter {
     String[] modulenames={"machine","machine","machine","machine","machine"};
     Context context=null;
     public ModuleAdapter(int modulecount, String[] modulenames, Context context){
-        this.modulecount=modulecount+2;
-//        this.modulenames=modulenames;
+        this.modulecount=modulecount;
+        this.modulenames=modulenames;
+        Log.e("mytag", "ModuleAdapter: "+modulecount );
         this.context=context;
     }
 

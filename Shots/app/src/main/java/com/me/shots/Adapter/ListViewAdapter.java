@@ -148,7 +148,7 @@ public class ListViewAdapter extends BaseAdapter {
                                         Bundle bundle = new Bundle();
                                         bundle.putString("title", On_going_Courses_Fragment.courses_list.get(k).getTitle());
                                         bundle.putString("link", On_going_Courses_Fragment.courses_list.get(k).getUrl());
-                                        intent.putExtras(bundle);
+                                        intent.putExtra("mybundle",bundle);
                                         SharedPreferences.Editor editor = sharedPreferences.edit();
                                         editor.putString("mip", mip + "," + On_going_Courses_Fragment.courses_list.get(k).getTitle());
                                         dialog.dismiss();
@@ -251,7 +251,7 @@ public class ListViewAdapter extends BaseAdapter {
                     bundle.putString("title",title);
                     bundle.putString("link",link);
                     dialog1.dismiss();
-                    intent.putExtras(bundle);
+                    intent.putExtra("mybundle",bundle);
                     context.startActivity(intent);
 
                 } catch (JSONException e) {
