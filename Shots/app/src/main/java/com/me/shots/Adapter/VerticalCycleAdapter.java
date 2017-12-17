@@ -184,6 +184,19 @@ public class VerticalCycleAdapter extends PagerAdapter {
             }
         });
 
+        final Button share_btn= (Button) view.findViewById(R.id.share_btn);
+
+        share_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "Shots is great: "+NewsPOGO.newsArray.get(position).link);
+                sendIntent.setType("text/plain");
+                context.startActivity(sendIntent);
+            }
+        });
+
 
         container.addView(view);
         return view;
