@@ -312,7 +312,7 @@
             android:id="@+id/AYO"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="About your Organisation"
+            android:text="About Our Organisation"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="#000000"

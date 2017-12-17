@@ -1,6 +1,8 @@
 package com.me.shots.Utils;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
@@ -9,13 +11,23 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.me.shots.Adapter.ModuleAdapter;
 import com.me.shots.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -34,20 +46,38 @@ public class ModulesActivity extends AppCompatActivity {
 
     String MYURL="http://ec2-52-14-50-89.us-east-2.compute.amazonaws.com/static/courses/Intro%20to%20Machine%20Learning";
     int modulecount=0;
+    Context context=this;
     String[] modulenames=null;
     String link="http://ec2-52-14-50-89.us-east-2.compute.amazonaws.com/static/courses/Intro to Machine Learning/1.pptx,http://ec2-52-14-50-89.us-east-2.compute.amazonaws.com/static/courses/Intro to Machine Learning/2.pptx,http://ec2-52-14-50-89.us-east-2.compute.amazonaws.com/static/courses/Intro to Machine Learning/3.pptx,";
     String coursetitle="Intro to Machine Learning";
     String []courselinks=null;
     String temp1[]=null;
     String temp2;
+    String response1="error";
+    SharedPreferences sharedPreferences;
+    String nickname;
+    int courseid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modules);
 
+        sharedPreferences= sharedPreferences=getSharedPreferences("MYSHAREDPREFERENCES",MODE_PRIVATE);
+        nickname=sharedPreferences.getString("nickname","null");
+
+        Button completed_btn=(Button)findViewById(R.id.completed_btn);
+        completed_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                completed();
+                if(response1.equalsIgnoreCase("true")){Toast.makeText(context,"Course completed"+response1,Toast.LENGTH_SHORT).show();}
+                else {Toast.makeText(context,"Course cannot be completed"+response1,Toast.LENGTH_SHORT).show();}
+            }
+        });
         Intent intent=getIntent();
         Bundle b=intent.getBundleExtra("mybundle");
         link=b.getString("link");
+        courseid=b.getInt("couresid");
         courselinks=link.split(",");
         modulecount=courselinks.length;
         modulenames=new String[modulecount];
@@ -80,12 +110,43 @@ public class ModulesActivity extends AppCompatActivity {
                     Log.e("mytag", "onCreate: "+modulenames[i]+"======"+i );
                 }
 */
-        ListAdapter listAdapter=new ModuleAdapter(modulecount,modulenames,getApplicationContext());
+        ListAdapter listAdapter=new ModuleAdapter(modulecount,modulenames,getApplicationContext(),courselinks);
         ListView listView= (ListView) findViewById(R.id.modules_listview);
         listView.setAdapter(listAdapter);
         listView.setEnabled(false);
         listView.setFocusable(false);
 
+
+    }
+
+    private void completed() {
+
+
+        String tempnick=nickname;
+        tempnick=tempnick.replace(" ","%20");
+        Log.e("mytag1", "completed: nicknameeeeeeeeeeeee"+tempnick+"-------"+nickname );
+        JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET,"http://ec2-52-14-50-89.us-east-2.compute.amazonaws.com/api/coursecompleted/"+tempnick+"/"+courseid,null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.e("Respone",response.toString());
+                try {
+                    Log.e("hii","HII");
+                     response1=response.toString();
+                    if(response1.length()>6)response1="error";
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context,"Error response ",Toast.LENGTH_SHORT).show();
+            }
+        });
+        RequestQueue queue= Volley.newRequestQueue(context);
+        queue.add(jsonObjectRequest);
 
     }
 

@@ -9,6 +9,7 @@
 
         <ListView
             android:id="@+id/modules_listview"
+            android:layout_above="@+id/completed_btn"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:dividerHeight="0dp"
@@ -17,5 +18,13 @@
             >
 
         </ListView>
+
+        <Button
+            android:id="@+id/completed_btn"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Completed"/>
 
 </RelativeLayout>

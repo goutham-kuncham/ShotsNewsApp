@@ -148,9 +148,12 @@ public class ListViewAdapter extends BaseAdapter {
                                         Bundle bundle = new Bundle();
                                         bundle.putString("title", On_going_Courses_Fragment.courses_list.get(k).getTitle());
                                         bundle.putString("link", On_going_Courses_Fragment.courses_list.get(k).getUrl());
+                                        bundle.putInt("couresid",On_going_Courses_Fragment.courses_list.get(k).getId());
                                         intent.putExtra("mybundle",bundle);
                                         SharedPreferences.Editor editor = sharedPreferences.edit();
                                         editor.putString("mip", mip + "," + On_going_Courses_Fragment.courses_list.get(k).getTitle());
+                                        editor.commit();
+                                        Toast.makeText(context,"Course added",Toast.LENGTH_SHORT).show();
                                         dialog.dismiss();
                                         context.startActivity(intent);
                                     }
@@ -246,10 +249,12 @@ public class ListViewAdapter extends BaseAdapter {
 
                     String link=myobj.getString("link");
                     String title=myobj.getString("title");
+                    int courseid=myobj.getInt("id");
                     Intent intent=new Intent(context,ModulesActivity.class);
                     Bundle bundle=new Bundle();
                     bundle.putString("title",title);
                     bundle.putString("link",link);
+                    bundle.putInt("couresid",courseid);
                     dialog1.dismiss();
                     intent.putExtra("mybundle",bundle);
                     context.startActivity(intent);

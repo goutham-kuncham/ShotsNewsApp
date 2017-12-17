@@ -1,6 +1,7 @@
 package com.me.shots.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.me.shots.PptWebViewActivity;
 import com.me.shots.R;
 import com.me.shots.Utils.ModulesActivity;
 
@@ -24,9 +26,11 @@ public class ModuleAdapter extends BaseAdapter {
     int modulecount=0;
     String[] modulenames={"machine","machine","machine","machine","machine"};
     Context context=null;
-    public ModuleAdapter(int modulecount, String[] modulenames, Context context){
+    String[] courselinks=null;
+    public ModuleAdapter(int modulecount, String[] modulenames, Context context,String[] courselinks){
         this.modulecount=modulecount;
         this.modulenames=modulenames;
+        this.courselinks=courselinks;
         Log.e("mytag", "ModuleAdapter: "+modulecount );
         this.context=context;
     }
@@ -49,7 +53,7 @@ public class ModuleAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         View view= LayoutInflater.from(context).inflate(R.layout.even_module_views,parent,false);
 
@@ -65,7 +69,7 @@ public class ModuleAdapter extends BaseAdapter {
 
         if(position%2==0)
         {
-            int moduleIndex=getEvenViews(position);
+            final int moduleIndex=getEvenViews(position);
 
             String name[]=modulenames[moduleIndex].split(".pptx");
             Log.e("mytag", "getView: "+moduleIndex+"==========="+modulenames[moduleIndex] );
@@ -74,7 +78,12 @@ public class ModuleAdapter extends BaseAdapter {
             centermWaveLoadingView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context,"center",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context,"center"+moduleIndex,Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(context,PptWebViewActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("modulelink",courselinks[moduleIndex]);
+                    Log.e("mytag1", "onClick:----------- "+courselinks[moduleIndex] );
+                    context.startActivity(intent);
                 }
             });
             RelativeLayout left= (RelativeLayout) view.findViewById(R.id.left_layout);
@@ -84,7 +93,7 @@ public class ModuleAdapter extends BaseAdapter {
             right.setVisibility(View.INVISIBLE);
         }
         else {
-            int moduleIndex=getEvenViews(position);
+            final int moduleIndex=getEvenViews(position);
             if(moduleIndex+2==modulecount){
                 String name[]=modulenames[moduleIndex+1].split(".pptx");
                 Log.e("mytag", "getView: "+moduleIndex+"==========="+modulenames[moduleIndex] );
@@ -95,7 +104,14 @@ public class ModuleAdapter extends BaseAdapter {
                 centermWaveLoadingView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(context,"center",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context,"center"+moduleIndex,Toast.LENGTH_SHORT).show();
+                        Log.e("mytag1", "onClick:----------- "+courselinks[moduleIndex] );
+
+                        Intent intent = new Intent(context,PptWebViewActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("modulelink",courselinks[moduleIndex]);
+                        context.startActivity(intent);
+
                     }
                 });
                 RelativeLayout left= (RelativeLayout) view.findViewById(R.id.left_layout);
@@ -120,7 +136,13 @@ public class ModuleAdapter extends BaseAdapter {
                 leftmWaveLoadingView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(context,"Left",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context,"Left"+moduleIndex,Toast.LENGTH_SHORT).show();
+                        Log.e("mytag1", "onClick:----------- "+courselinks[moduleIndex+1] );
+
+                        Intent intent = new Intent(context,PptWebViewActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("modulelink",courselinks[moduleIndex+1]);
+                        context.startActivity(intent);
 
                     }
                 });
@@ -132,7 +154,13 @@ public class ModuleAdapter extends BaseAdapter {
                 rightmWaveLoadingView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(context,"Right",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context,"Right"+moduleIndex,Toast.LENGTH_SHORT).show();
+                        Log.e("mytag1", "onClick:----------- "+courselinks[moduleIndex+2] );
+
+                        Intent intent = new Intent(context,PptWebViewActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("modulelink",courselinks[moduleIndex+2]);
+                        context.startActivity(intent);
 
                     }
                 });
