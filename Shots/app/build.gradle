@@ -41,6 +41,7 @@ dependencies {
     compile 'org.jsoup:jsoup:1.7.3'
     compile 'com.github.lzyzsd:circleprogress:1.2.1'  //not used
     compile 'me.itangqi.waveloadingview:library:0.3.5'
+    compile 'jp.wasabeef:blurry:2.1.1'//used to blur
     compile 'de.hdodenhof:circleimageview:2.1.0'
     testCompile 'junit:junit:4.12'
 }

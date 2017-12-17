@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -69,7 +70,6 @@ public class GetNewsAsync extends AsyncTask<Void,Void,String> {
             public void onResponse(JSONObject response) {
                 try {
                     ArrayList<NewsPOGO> newsArray =new ArrayList<>();
-//                    NewsPOGO.newsArray.clear();
                     Log.d("tagged", "onResponse: "+response.toString());
                     resp=response.toString();
                     JSONArray jsonArray=response.getJSONArray("objects");
@@ -118,7 +118,7 @@ public class GetNewsAsync extends AsyncTask<Void,Void,String> {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         MySingleton.getMyInstance(context).addToReqQue(jsonObjectRequest);
 
-        return null;
+        return resp;
     }
 
 
@@ -128,6 +128,7 @@ public class GetNewsAsync extends AsyncTask<Void,Void,String> {
         mProgressView.setVisibility(View.GONE);
         PagerAdapter adapter=new VerticalCycleAdapter(context);
         viewPager.setAdapter(adapter);
+
         super.onPostExecute(s);
     }
 }

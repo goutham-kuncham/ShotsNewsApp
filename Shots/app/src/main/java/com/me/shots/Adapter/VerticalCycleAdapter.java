@@ -2,7 +2,12 @@ package com.me.shots.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.BlurMaskFilter;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
@@ -28,10 +33,16 @@ import com.me.shots.Utils.WebViewActivity;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import jp.wasabeef.blurry.Blurry;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by Half_BlooD PrincE on 10/6/2017.
@@ -68,34 +79,31 @@ public class VerticalCycleAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, final int position) {
         View view= LayoutInflater.from(context).inflate(R.layout.fragment_card,container,false);
-        ImageView imageView= (ImageView) view.findViewById(R.id.newsImage);
         TextView textView= (TextView) view.findViewById(R.id.newsText);
         TextView title= (TextView) view.findViewById(R.id.newsTitle);
         TextView timestamp= (TextView) view.findViewById(R.id.newsTimeStamp);
         Log.d("MYTag", "instantiateItem: "+position);
-        if(position==0) {
+        ImageView imageView= (ImageView) view.findViewById(R.id.newsImage);
 
-            GetNewsImageAsync getImage = new GetNewsImageAsync(context, imageView, position);
-            getImage.execute();
-            getImage = new GetNewsImageAsync(context, imageView, position+1);
-            getImage.execute();
-            getImage = new GetNewsImageAsync(context, imageView, position+2);
-            getImage.execute();
-            getImage = new GetNewsImageAsync(context, imageView, position+3);
-            getImage.execute();
-            getImage = new GetNewsImageAsync(context, imageView, position+4);
-            getImage.execute();
-        }
-        else if(position+5<NewsPOGO.newsArray.size())
+        if(NewsPOGO.newsArray.get(position).news_image==null)
         {
-            GetNewsImageAsync getImage = new GetNewsImageAsync(context, imageView, position+5);
-            getImage.execute();
-            imageView.setImageBitmap(NewsPOGO.newsArray.get(position).news_image);
+            new ImageDownloaderTask(imageView,position).execute(NewsPOGO.newsArray.get(position).image);
         }
         else
+        {
             imageView.setImageBitmap(NewsPOGO.newsArray.get(position).news_image);
+        }
 
-//        imageView.setImageResource(R.mipmap.ic_launcher);
+/*
+        for(int i=1;i<10;i++)                                                                                           //fetching next 9 images
+        {
+            if(position+i==NewsPOGO.newsArray.size())
+                break;
+            if(NewsPOGO.newsArray.get(position+i).news_image==null)
+                new ImageDownloaderTask(imageView,position,false).execute(NewsPOGO.newsArray.get(position+i).image);
+        }
+*/
+
         String timeedit=NewsPOGO.newsArray.get(position).timestamp.substring(0,10)+"    "+NewsPOGO.newsArray.get(position).timestamp.substring(11,18);
         textView.setText(""+NewsPOGO.newsArray.get(position).body);
         title.setText(NewsPOGO.newsArray.get(position).title);
@@ -112,50 +120,66 @@ public class VerticalCycleAdapter extends PagerAdapter {
         });
 
 
+        SharedPreferences sharedPreferences=context.getSharedPreferences("MYSHAREDPREFERENCES",MODE_PRIVATE);
+        final String userId=sharedPreferences.getString("userid",null);
+
         final Button like_btn= (Button) view.findViewById(R.id.like_btn);
+
+
+        if(NewsPOGO.newsArray.get(position).liked)
+        {
+            like_btn.setCompoundDrawablesRelativeWithIntrinsicBounds(0,R.drawable.love,0,0);
+        }
+        else
+        {
+            like_btn.setCompoundDrawablesRelativeWithIntrinsicBounds(0,R.drawable.unlove,0,0);
+        }
+
         like_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(like==0)
+                if(!NewsPOGO.newsArray.get(position).liked)
                 {
-                    Log.e("tttttttttttttttttt","---");
-                    like++;
-                    //set like red
-                    new LikeTask(5+"",1+"",0).execute();
+                    NewsPOGO.newsArray.get(position).liked=true;
+                    new LikeTask(NewsPOGO.newsArray.get(position).id+"",userId,0).execute();
                     like_btn.setCompoundDrawablesRelativeWithIntrinsicBounds(0,R.drawable.love,0,0);
-
                 }
                 else
                 {
-                    like--;
-                    new LikeTask(5+"",1+"",1).execute();
+                    NewsPOGO.newsArray.get(position).liked=false;
+                    new LikeTask(NewsPOGO.newsArray.get(position).id+"",userId,1).execute();
                     like_btn.setCompoundDrawablesRelativeWithIntrinsicBounds(0,R.drawable.unlove,0,0);
-
-                    //set like white
                 }
             }
         });
 
 
         final Button bookmark_btn=(Button) view.findViewById(R.id.bookmark_btn);
+
+        if(NewsPOGO.newsArray.get(position).bookmarked)
+        {
+            bookmark_btn.setCompoundDrawablesRelativeWithIntrinsicBounds(0,R.drawable.bookmark,0,0);
+        }
+        else
+        {
+            bookmark_btn.setCompoundDrawablesRelativeWithIntrinsicBounds(0,R.drawable.unbookmark,0,0);
+        }
+
         bookmark_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(bookmark==0)
+                if(!NewsPOGO.newsArray.get(position).bookmarked)
                 {
-                    Log.e("tttttttttttttttttt","---");
-                    like++;
-                    new BookmarkTask(5+"",1+"",0).execute();
+                    NewsPOGO.newsArray.get(position).bookmarked=true;
+                    new BookmarkTask(NewsPOGO.newsArray.get(position).id+"",userId,0).execute();
                     bookmark_btn.setCompoundDrawablesRelativeWithIntrinsicBounds(0,R.drawable.bookmark,0,0);
 
                 }
                 else
                 {
-                    like--;
-
-                    new BookmarkTask(5+"",1+"",1).execute();
+                    NewsPOGO.newsArray.get(position).bookmarked=false;
+                    new BookmarkTask(NewsPOGO.newsArray.get(position).id+"",userId,1).execute();
                     bookmark_btn.setCompoundDrawablesRelativeWithIntrinsicBounds(0,R.drawable.unbookmark,0,0);
-                    //set like white
                 }
             }
         });
@@ -166,6 +190,83 @@ public class VerticalCycleAdapter extends PagerAdapter {
 
     }
 
+
+    class ImageDownloaderTask extends AsyncTask<String, Void, Bitmap> {
+
+        private final WeakReference<ImageView> imageViewReference;
+        int position=-1;
+        boolean flag=true;
+
+        public ImageDownloaderTask(ImageView imageView) {
+            imageViewReference = new WeakReference<ImageView>(imageView);
+        }
+
+        public ImageDownloaderTask(ImageView imageView,int position) {
+            imageViewReference = new WeakReference<ImageView>(imageView);
+            this.position=position;
+        }
+
+        public ImageDownloaderTask(ImageView imageView,int position,boolean flag) {
+            imageViewReference = new WeakReference<ImageView>(imageView);
+            this.position=position;
+            this.flag=flag;
+        }
+
+
+        @Override
+        protected Bitmap doInBackground(String... params) {
+            return downloadBitmap(params[0]);
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            if (isCancelled()) {
+                bitmap = null;
+            }
+
+            if (imageViewReference != null) {
+                ImageView imageView = imageViewReference.get();
+                if (imageView != null) {
+                    if (bitmap != null) {
+                        if(flag)
+                        imageView.setImageBitmap(bitmap);
+                        NewsPOGO.newsArray.get(position).news_image=bitmap;
+                    } else {
+                        Drawable placeholder = null;
+                        if(flag)
+                        imageView.setImageDrawable(placeholder);
+                    }
+                }
+            }
+        }
+
+        private Bitmap downloadBitmap(String url) {
+            HttpURLConnection urlConnection = null;
+            try {
+                URL uri = new URL(url);
+                urlConnection = (HttpURLConnection) uri.openConnection();
+
+                final int responseCode = urlConnection.getResponseCode();
+                if (responseCode != HttpURLConnection.HTTP_OK) {
+                    return null;
+                }
+
+                InputStream inputStream = urlConnection.getInputStream();
+                if (inputStream != null) {
+                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                    return bitmap;
+                }
+            } catch (Exception e) {
+                urlConnection.disconnect();
+                Log.w("ImageDownloader", "Errore durante il download da " + url);
+            } finally {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                }
+            }
+            return null;
+        }
+    }
 
 
 
@@ -298,7 +399,7 @@ public class VerticalCycleAdapter extends PagerAdapter {
         @Override
         protected void onPostExecute(String s) {
             //mProgressView.setVisibility(View.GONE);
-            Toast.makeText(context,"--"+s,Toast.LENGTH_LONG).show();
+            //Toast.makeText(context,"--"+s,Toast.LENGTH_LONG).show();
             //check=s;
 
         }

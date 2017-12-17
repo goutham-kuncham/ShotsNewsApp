@@ -25,6 +25,8 @@ public class NewsPOGO {
     public String types;
     public int user_id;
     public Bitmap news_image;
+    public Boolean liked=false;
+    public Boolean bookmarked=false;
 
     public NewsPOGO()
     {
