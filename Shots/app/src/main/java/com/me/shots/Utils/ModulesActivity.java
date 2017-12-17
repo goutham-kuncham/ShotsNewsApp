@@ -23,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.me.shots.Adapter.ModuleAdapter;
+import com.me.shots.On_going_Courses_Fragment;
 import com.me.shots.R;
 
 import org.json.JSONArray;
@@ -53,9 +54,10 @@ public class ModulesActivity extends AppCompatActivity {
     String []courselinks=null;
     String temp1[]=null;
     String temp2;
-    String response1="error";
+    String response1="hello";
     SharedPreferences sharedPreferences;
     String nickname;
+    String mip;
     int courseid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,9 +71,21 @@ public class ModulesActivity extends AppCompatActivity {
         completed_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                completed();
+               int qw=completed();
                 if(response1.equalsIgnoreCase("true")){Toast.makeText(context,"Course completed"+response1,Toast.LENGTH_SHORT).show();}
                 else {Toast.makeText(context,"Course cannot be completed"+response1,Toast.LENGTH_SHORT).show();}
+                mip=sharedPreferences.getString("mip","lol");
+                Log.e("mytag1", "onResponse: ---------"+mip );
+
+                mip=mip.replace(","+coursetitle,"");
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("mip", mip);
+
+                Log.e("mytag1", "onResponse: ---------"+mip );
+                editor.commit();
+
+                finish();
+
             }
         });
         Intent intent=getIntent();
@@ -79,6 +93,7 @@ public class ModulesActivity extends AppCompatActivity {
         link=b.getString("link");
         courseid=b.getInt("couresid");
         courselinks=link.split(",");
+        coursetitle=b.getString("title",null);
         modulecount=courselinks.length;
         modulenames=new String[modulecount];
         for(int i=0;i<modulecount;i++) {
@@ -119,7 +134,7 @@ public class ModulesActivity extends AppCompatActivity {
 
     }
 
-    private void completed() {
+    private int completed() {
 
 
         String tempnick=nickname;
@@ -133,6 +148,8 @@ public class ModulesActivity extends AppCompatActivity {
                     Log.e("hii","HII");
                      response1=response.toString();
                     if(response1.length()>6)response1="error";
+
+
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -148,6 +165,7 @@ public class ModulesActivity extends AppCompatActivity {
         RequestQueue queue= Volley.newRequestQueue(context);
         queue.add(jsonObjectRequest);
 
+        return 1;
     }
 
 
