@@ -9,21 +9,25 @@ import android.widget.TextView;
 
 import com.me.shots.R;
 
+import java.util.ArrayList;
+
 /**
  * Created by J Girish on 10-12-2017.
  */
 
 public class DomainListAdapter extends BaseAdapter {
     Context context;
-    String domain_names[]={"Technology","Marketing","Programming","Management","Human Resources","Basic Finance"};
+    ArrayList <String> courses=new ArrayList<>();
+    // String domain_names[]={"Technology","Marketing","Programming","Management","Human Resources","Basic Finance"};
 
-    public DomainListAdapter(Context context)
+    public DomainListAdapter(Context context, ArrayList<String> courses)
     {
+        this.courses=courses;
         this.context=context;
     }
     @Override
     public int getCount() {
-        return 6;
+        return courses.size();
     }
 
     @Override
@@ -39,9 +43,8 @@ public class DomainListAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         View myview= LayoutInflater.from(context).inflate(R.layout.domains_list,null);
-        TextView domainnm=(TextView)myview.findViewById(R.id.mydomain);
-
-        domainnm.setText(domain_names[i]);
+        TextView domain=(TextView)myview.findViewById(R.id.mydomain);
+        domain.setText(courses.get(i));
         return  myview;
     }
 }

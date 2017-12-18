@@ -229,6 +229,8 @@ public class TestLoginActivity extends AppCompatActivity {
                     int mip_count=mip_tokenizer.countTokens();
                     int mc_count=mc_tTokenizer.countTokens();
                     String karmapoints=myobj.getString("karma")+"";
+                    String interests=myobj.getString("interests");
+                    String domain=myobj.getString("domain");
                     if(karmapoints.equalsIgnoreCase("null")) karma=0;
                     else
                         karma=myobj.getInt("karma");
@@ -244,6 +246,8 @@ public class TestLoginActivity extends AppCompatActivity {
                     editor.putInt("mip_count",mip_count);
                     editor.putInt("mc_count",mc_count);
                     editor.putInt("karma",karma);
+                    editor.putString("interests",interests);
+                    editor.putString("mydomain",domain);
                     editor.apply();
                     Log.e("nickname",nickname+"lol");
                     Log.e("nickname_orga",organization+"lol");

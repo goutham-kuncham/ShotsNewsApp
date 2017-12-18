@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <android.support.v7.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view"
@@ -10,13 +11,27 @@
         android:layout_margin="10dp"
         android:background="#fcdcdc"
         card_view:cardCornerRadius="11dp">
-        <TextView
-            android:id="@+id/mydomain"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textSize="16sp"
-            android:textColor="#000000"
-            android:gravity="center"
-            android:textStyle="bold"/>
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/mydomain"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="16sp"
+                android:textColor="#000000"
+                android:gravity="center"
+                android:textStyle="bold"/>
+            <ImageView
+                android:id="@+id/AddRemove"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="14sp"
+                android:paddingRight="20sp"
+                android:visibility="invisible"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/add"
+                />
+        </RelativeLayout>
     </android.support.v7.widget.CardView>
 </LinearLayout>

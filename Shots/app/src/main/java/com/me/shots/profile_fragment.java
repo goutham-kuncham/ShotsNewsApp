@@ -108,7 +108,16 @@ public class profile_fragment extends Fragment {
                 Toast.makeText(getActivity(),"Notification",Toast.LENGTH_SHORT).show();
             }
         });
-
+        domain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment fragment=new DomainFragment();
+                FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.homeFrame_PlaceHolder,fragment);
+                fragmentTransaction.commit();
+            }
+        });
 //       imageView.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {

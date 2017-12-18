@@ -61,9 +61,22 @@ public class On_going_Courses_Fragment extends android.support.v4.app.Fragment {
         View view=inflater.inflate(R.layout.on_going_courses_fragment, container, false);
         sharedPreferences=this.getActivity().getSharedPreferences("MYSHAREDPREFERENCES",MODE_PRIVATE);
         String mip=sharedPreferences.getString("mip","lol");
+        String interests=sharedPreferences.getString("interests","lol");
+        String mydomain=sharedPreferences.getString("mydomain","Nodomain");
+        ArrayList <String> my_interests=new ArrayList<>();
         ArrayList <String> in_progress_courses=new ArrayList<>();
         TextView promt=(TextView)view.findViewById(R.id.no_courses);
         StringTokenizer st = new StringTokenizer(mip,",");
+        StringTokenizer st1=new StringTokenizer(interests,",");
+        if(mydomain.equals("null"))
+        {
+            mydomain="Programming";
+        }
+        my_interests.add(mydomain);
+        while (st1.hasMoreTokens())
+        {
+            my_interests.add(st1.nextToken());
+        }
         while (st.hasMoreTokens()) {
             in_progress_courses.add(st.nextElement().toString());
         }
@@ -94,7 +107,7 @@ public class On_going_Courses_Fragment extends android.support.v4.app.Fragment {
         });
 
         ListView domainList=(ListView)view.findViewById(R.id.dlist_display);
-        DomainListAdapter domainListAdapter=new DomainListAdapter(getActivity());
+        DomainListAdapter domainListAdapter=new DomainListAdapter(getActivity(),my_interests);
         domainList.setAdapter(domainListAdapter);
         domainList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
