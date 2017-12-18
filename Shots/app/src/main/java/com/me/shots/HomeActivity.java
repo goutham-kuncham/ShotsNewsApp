@@ -121,6 +121,7 @@ public class HomeActivity extends AppCompatActivity {
                 fragment=new On_going_Courses_Fragment();
                 break;
             case R.id.btn_explore:
+                getNews();
                 fragment=new NewsFragment();
                 break;
             case R.id.btn_profile:
