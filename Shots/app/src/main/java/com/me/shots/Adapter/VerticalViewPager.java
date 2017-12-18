@@ -27,7 +27,7 @@ public class VerticalViewPager extends ViewPager {
         setOverScrollMode(OVER_SCROLL_NEVER);
     }
     private static class VerticalPageTransformer implements PageTransformer {
-        private static float MIN_SCALE = 0.75f;
+        private static float MIN_SCALE = 0.85f;
 
         public void transformPage(View view, float position) {
             int pageWidth = view.getWidth();
@@ -41,7 +41,7 @@ public class VerticalViewPager extends ViewPager {
 
             } else if (position <= 0) { // [-1,0]
                 // Use the default slide transition when moving to the left page
-                view.setAlpha(1 + position);
+                view.setAlpha(1);
                 //view.setTranslationX(1);
                 view.setScaleX(1);
                 view.setScaleY(1);
@@ -52,7 +52,7 @@ public class VerticalViewPager extends ViewPager {
 
             } else if (position <= 1) { // (0,1]
                 // Fade the page out.
-                view.setAlpha(1);
+                view.setAlpha(1-position);
 
                 view.setTranslationX(-1 * view.getWidth() * position);
 

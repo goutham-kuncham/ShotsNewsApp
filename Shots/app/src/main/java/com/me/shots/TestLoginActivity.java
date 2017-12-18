@@ -426,7 +426,7 @@ public class TestLoginActivity extends AppCompatActivity {
                 if(jsonArray.length()!= NewsPOGO.newsArray.size())
                 {
                     NewsPOGO.newsArray.clear();
-                    for(int i=0;i<jsonArray.length();i++)
+                    for(int i=jsonArray.length()-1;i>=0;i--)
                     {
                         NewsPOGO newsPOGO;
                         JSONObject jsonObject= jsonArray.getJSONObject(i);
