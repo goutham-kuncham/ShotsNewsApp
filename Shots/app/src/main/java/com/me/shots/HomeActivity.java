@@ -315,30 +315,30 @@ public class HomeActivity extends AppCompatActivity {
 //
 //
 //
-//    @Override
-//    public void onBackPressed() {
-//        final Dialog dialog = new Dialog(HomeActivity.this,R.style.Theme_AppCompat_Light_Dialog_Alert);
-//        dialog.setContentView(R.layout.exit_dialogue);
-//        Button cancel=(Button)dialog.findViewById(R.id.cancel_dia);
-//        dialog.show();
-//        cancel.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                dialog.dismiss();
-//            }
-//        });
-//        Button exit=(Button)dialog.findViewById(R.id.exit_dia);
-//        exit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {// super.onBackPressed();
-//                finish();
-//            }
-//        });
-//        dialog.show();
-//
-//    }
-//
-//
+    @Override
+    public void onBackPressed() {
+        final Dialog dialog = new Dialog(HomeActivity.this,R.style.Theme_AppCompat_Light_Dialog_Alert);
+        dialog.setContentView(R.layout.exit_dialogue);
+        Button cancel=(Button)dialog.findViewById(R.id.cancel_dia);
+        dialog.show();
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        Button exit=(Button)dialog.findViewById(R.id.exit_dia);
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {// super.onBackPressed();
+                finish();
+            }
+        });
+        dialog.show();
+
+    }
+
+
 //    void getNews()
 //    {
 //        String jsonURL="http://ec2-52-14-50-89.us-east-2.compute.amazonaws.com/api/post";
