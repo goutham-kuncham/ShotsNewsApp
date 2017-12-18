@@ -26,6 +26,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.me.shots.Adapter.BookmarksAdapter;
 import com.me.shots.Utils.MySingleton;
+import com.me.shots.Utils.NewsPOGO;
 
 import java.io.ByteArrayOutputStream;
 
@@ -150,6 +151,7 @@ public class profile_fragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         // super.onBackPressed();
+                        NewsPOGO.newsArray.clear();
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.clear();
                         editor.commit();
