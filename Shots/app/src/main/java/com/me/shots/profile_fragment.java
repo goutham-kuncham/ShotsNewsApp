@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
+import com.me.shots.Adapter.BookmarksAdapter;
 import com.me.shots.Utils.MySingleton;
 
 import java.io.ByteArrayOutputStream;
@@ -97,7 +98,8 @@ public class profile_fragment extends Fragment {
         bookmarks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(),"Bookmarks",Toast.LENGTH_SHORT).show();
+                Intent intent= new Intent(getContext(), BookmarksActivity.class);
+                startActivity(intent);
             }
         });
         notifications.setOnClickListener(new View.OnClickListener() {
@@ -106,12 +108,7 @@ public class profile_fragment extends Fragment {
                 Toast.makeText(getActivity(),"Notification",Toast.LENGTH_SHORT).show();
             }
         });
-        bookmarks.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity(),"Domain",Toast.LENGTH_SHORT).show();
-            }
-        });
+
 //       imageView.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {

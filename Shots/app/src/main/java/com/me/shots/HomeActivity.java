@@ -135,6 +135,146 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+
+
+    @Override
+    public void onBackPressed() {
+        final Dialog dialog = new Dialog(HomeActivity.this,R.style.Theme_AppCompat_Light_Dialog_Alert);
+        dialog.setContentView(R.layout.exit_dialogue);
+        Button cancel=(Button)dialog.findViewById(R.id.cancel_dia);
+        dialog.show();
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        Button exit=(Button)dialog.findViewById(R.id.exit_dia);
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {// super.onBackPressed();
+                finish();
+            }
+        });
+        dialog.show();
+
+    }
+
+
+    void getNews()
+    {
+        String jsonURL="http://ec2-52-14-50-89.us-east-2.compute.amazonaws.com/api/post";
+        try {
+            String jsonString=new getNewsString().execute(jsonURL).get();
+            if(jsonString.equalsIgnoreCase("error"))
+            {
+                //ERROR FETCHING NEWS!!!
+            }
+            else
+            {
+                JSONObject response=new JSONObject(jsonString);
+                JSONArray jsonArray=response.getJSONArray("objects");
+                if(jsonArray.length()!=NewsPOGO.newsArray.size())
+                {
+                    NewsPOGO.newsArray.clear();
+                    for(int i=jsonArray.length()-1;i>=0;i--)
+                    {
+                        NewsPOGO newsPOGO;
+                        JSONObject jsonObject= jsonArray.getJSONObject(i);
+
+                        newsPOGO=new NewsPOGO();
+                        newsPOGO.body=jsonObject.getString("body");
+                        newsPOGO.category=jsonObject.getString("category");
+                        newsPOGO.content_type=jsonObject.getString("content_type");
+                        newsPOGO.id=jsonObject.getInt("id");
+                        newsPOGO.image=jsonObject.getString("image");
+                        newsPOGO.likes=jsonObject.getInt("likes");
+                        newsPOGO.link=jsonObject.getString("link");
+                        newsPOGO.timestamp=jsonObject.getString("timestamp");
+                        newsPOGO.title=jsonObject.getString("title");
+                        newsPOGO.types=jsonObject.getString("types");
+                        newsPOGO.user_id=jsonObject.getInt("user_id");
+                        NewsPOGO.newsArray.add(newsPOGO);
+
+                    }
+                    Log.d("explore", "getNews: "+NewsPOGO.newsArray.size());
+                }
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    class getNewsString extends AsyncTask<String,Void,String>
+    {
+
+        public static final String REQUEST_METHOD = "GET";
+        public static final int READ_TIMEOUT = 15000;
+        public static final int CONNECTION_TIMEOUT = 15000;
+
+        @Override
+        protected String doInBackground(String... params) {
+            String stringUrl = params[0];
+
+            Log.e("mytag", "doInBackground: "+"inside aclling"+stringUrl );
+            String result="ERROR";
+            String inputLine;
+            int responsecode=0;
+            try{
+                URL loginUrl=new URL(stringUrl);
+                HttpURLConnection connection =(HttpURLConnection)
+                        loginUrl.openConnection();
+                connection.setRequestMethod(REQUEST_METHOD);
+                connection.setReadTimeout(READ_TIMEOUT);
+                connection.setConnectTimeout(CONNECTION_TIMEOUT);
+
+                connection.connect();
+                responsecode=connection.getResponseCode();
+                Log.e("mytag", "doInBackground: "+responsecode );
+                InputStreamReader streamReader = new
+                        InputStreamReader(connection.getInputStream());
+
+                BufferedReader reader = new BufferedReader(streamReader);
+                StringBuilder stringBuilder = new StringBuilder();
+
+
+                while((inputLine = reader.readLine()) != null){
+                    stringBuilder.append(inputLine);
+                }
+
+                reader.close();
+                streamReader.close();
+                Log.e("mytag","Value==="+stringBuilder.toString());
+                result = stringBuilder.toString();
+                Log.e("mytag", "doInBackground: "+result );
+            } catch (ProtocolException e) {
+                e.printStackTrace();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Log.e("mytag", "doInBackground: "+result );
+            if(responsecode==200)
+                return result;
+            else return "error";
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+        }
+    }
+
+
+
 //    void getDetails()                                                                                    //personal details
 //    {
 //        JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url,null, new Response.Listener<JSONObject>() {
@@ -315,217 +455,5 @@ public class HomeActivity extends AppCompatActivity {
 //
 //
 //
-    @Override
-    public void onBackPressed() {
-        final Dialog dialog = new Dialog(HomeActivity.this,R.style.Theme_AppCompat_Light_Dialog_Alert);
-        dialog.setContentView(R.layout.exit_dialogue);
-        Button cancel=(Button)dialog.findViewById(R.id.cancel_dia);
-        dialog.show();
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
-        Button exit=(Button)dialog.findViewById(R.id.exit_dia);
-        exit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {// super.onBackPressed();
-                finish();
-            }
-        });
-        dialog.show();
-
-    }
-
-
-//    void getNews()
-//    {
-//        String jsonURL="http://ec2-52-14-50-89.us-east-2.compute.amazonaws.com/api/post";
-//        try {
-//            String jsonString=new getNewsString().execute(jsonURL).get();
-//            if(jsonString.equalsIgnoreCase("error"))
-//            {
-//                //ERROR FETCHING NEWS!!!
-//            }
-//            else
-//            {
-//                JSONObject response=new JSONObject(jsonString);
-//                JSONArray jsonArray=response.getJSONArray("objects");
-//                if(jsonArray.length()!=NewsPOGO.newsArray.size())
-//                {
-//                    NewsPOGO.newsArray.clear();
-//                    for(int i=0;i<jsonArray.length();i++)
-//                    {
-//                        NewsPOGO newsPOGO;
-//                        JSONObject jsonObject= jsonArray.getJSONObject(i);
-//
-//                        newsPOGO=new NewsPOGO();
-//                        newsPOGO.body=jsonObject.getString("body");
-//                        newsPOGO.category=jsonObject.getString("category");
-//                        newsPOGO.content_type=jsonObject.getString("content_type");
-//                        newsPOGO.id=jsonObject.getInt("id");
-//                        newsPOGO.image=jsonObject.getString("image");
-//                        newsPOGO.likes=jsonObject.getInt("likes");
-//                        newsPOGO.link=jsonObject.getString("link");
-//                        newsPOGO.timestamp=jsonObject.getString("timestamp");
-//                        newsPOGO.title=jsonObject.getString("title");
-//                        newsPOGO.types=jsonObject.getString("types");
-//                        newsPOGO.user_id=jsonObject.getInt("user_id");
-//                        NewsPOGO.newsArray.add(newsPOGO);
-//
-//                    }
-//                    Log.d("explore", "getNews: "+NewsPOGO.newsArray.size());
-//                }
-//            }
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        } catch (ExecutionException e) {
-//            e.printStackTrace();
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
-//
-//
-//    void getLikes()
-//    {
-//        String jsonURL="http://ec2-52-14-50-89.us-east-2.compute.amazonaws.com/api/like?q={\"filters\":[{\"name\":\"user_email\",\"op\":\"eq\",\"val\":\""+email+"\"}]}";
-//        try {
-//            String jsonString=new getNewsString().execute(jsonURL).get();
-//            if(jsonString.equalsIgnoreCase("error"))
-//            {
-//                //ERROR FETCHING Likes Details!!!
-//            }
-//            else
-//            {
-//                JSONObject response=new JSONObject(jsonString);
-//                JSONArray jsonArray=response.getJSONArray("objects");
-//                for(int i=0;i<jsonArray.length();i++)
-//                {
-//                    JSONObject jsonObject= jsonArray.getJSONObject(i);
-//                    int post_id=jsonObject.getInt("post_id");
-//                    for(int j=0;j<NewsPOGO.newsArray.size();j++)
-//                    {
-//                        if(post_id==NewsPOGO.newsArray.get(j).id)
-//                        {
-//                            NewsPOGO.newsArray.get(j).liked=true;
-//                            break;
-//                        }
-//                    }
-//                }
-//            }
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        } catch (ExecutionException e) {
-//            e.printStackTrace();
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
-//
-//    void getBookmarks()
-//    {
-//
-//        String jsonURL="http://ec2-52-14-50-89.us-east-2.compute.amazonaws.com/api/bookmark?q={\"filters\":[{\"name\":\"user_email\",\"op\":\"eq\",\"val\":\""+email+"\"}]}";
-//        try {
-//
-//            String jsonString=new getNewsString().execute(jsonURL).get();
-//            if(jsonString.equalsIgnoreCase("error"))
-//            {
-//                //ERROR FETCHING Likes Details!!!
-//            }
-//            else
-//            {
-//                JSONObject response=new JSONObject(jsonString);
-//                JSONArray jsonArray=response.getJSONArray("objects");
-//                for(int i=0;i<jsonArray.length();i++)
-//                {
-//                    JSONObject jsonObject= jsonArray.getJSONObject(i);
-//                    int post_id=jsonObject.getInt("post_id");
-//                    for(int j=0;j<NewsPOGO.newsArray.size();j++)
-//                    {
-//                        if(post_id==NewsPOGO.newsArray.get(j).id)
-//                        {
-//                            NewsPOGO.newsArray.get(j).bookmarked=true;
-//                            break;
-//                        }
-//                    }
-//                }
-//            }
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        } catch (ExecutionException e) {
-//            e.printStackTrace();
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
-//
-//
-//    class getNewsString extends AsyncTask<String,Void,String>
-//    {
-//
-//        public static final String REQUEST_METHOD = "GET";
-//        public static final int READ_TIMEOUT = 15000;
-//        public static final int CONNECTION_TIMEOUT = 15000;
-//
-//        @Override
-//        protected String doInBackground(String... params) {
-//            String stringUrl = params[0];
-//
-//            Log.e("mytag", "doInBackground: "+"inside aclling"+stringUrl );
-//            String result="ERROR";
-//            String inputLine;
-//            int responsecode=0;
-//            try{
-//                URL loginUrl=new URL(stringUrl);
-//                HttpURLConnection connection =(HttpURLConnection)
-//                        loginUrl.openConnection();
-//                connection.setRequestMethod(REQUEST_METHOD);
-//                connection.setReadTimeout(READ_TIMEOUT);
-//                connection.setConnectTimeout(CONNECTION_TIMEOUT);
-//
-//                connection.connect();
-//                responsecode=connection.getResponseCode();
-//                Log.e("mytag", "doInBackground: "+responsecode );
-//                InputStreamReader streamReader = new
-//                        InputStreamReader(connection.getInputStream());
-//
-//                BufferedReader reader = new BufferedReader(streamReader);
-//                StringBuilder stringBuilder = new StringBuilder();
-//
-//
-//                while((inputLine = reader.readLine()) != null){
-//                    stringBuilder.append(inputLine);
-//                }
-//
-//                reader.close();
-//                streamReader.close();
-//                Log.e("mytag","Value==="+stringBuilder.toString());
-//                result = stringBuilder.toString();
-//                Log.e("mytag", "doInBackground: "+result );
-//            } catch (ProtocolException e) {
-//                e.printStackTrace();
-//            } catch (MalformedURLException e) {
-//                e.printStackTrace();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//            Log.e("mytag", "doInBackground: "+result );
-//            if(responsecode==200)
-//                return result;
-//            else return "error";
-//        }
-//
-//        @Override
-//        protected void onPostExecute(String s) {
-//            super.onPostExecute(s);
-//        }
-//    }
 
 }

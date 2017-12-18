@@ -15,6 +15,7 @@ import com.me.shots.Adapter.VerticalCycleAdapter;
 import com.me.shots.Adapter.VerticalViewPager;
 import com.me.shots.AsyncTasks.GetNewsAsync;
 import com.me.shots.R;
+import com.me.shots.Utils.NewsPOGO;
 //
 //import com.shorts.jgirish.snu_pro.Adapter.VerticalViewPager;
 //import com.shorts.jgirish.snu_pro.AsyncTasks.AsyncTasks.GetNewsAsync;
@@ -38,6 +39,7 @@ public class NewsFragment extends Fragment {
         VerticalViewPager viewPager= (VerticalViewPager) view.findViewById(R.id.viewPager);
         PagerAdapter adapter=new VerticalCycleAdapter(getContext());
         viewPager.setAdapter(adapter);
+//        viewPager.setCurrentItem(NewsPOGO.currentPosition);
         return view;
     }
 }

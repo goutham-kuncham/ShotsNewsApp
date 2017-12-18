@@ -12,6 +12,7 @@ public class NewsPOGO {
 
 
     public static ArrayList<NewsPOGO> newsArray =new ArrayList<>();
+    public static int currentPosition=0;
 
     public String body;
     public String category;
