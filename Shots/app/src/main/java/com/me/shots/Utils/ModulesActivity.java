@@ -58,7 +58,14 @@ public class ModulesActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     String nickname;
     String mip;
+    String tempnick;
+    String mc;
+    String myurl2;
+    String karmaresponse;
+    int mykarma;
+    int karma;
     int courseid;
+    int mc_count,mip_count;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +73,10 @@ public class ModulesActivity extends AppCompatActivity {
 
         sharedPreferences= sharedPreferences=getSharedPreferences("MYSHAREDPREFERENCES",MODE_PRIVATE);
         nickname=sharedPreferences.getString("nickname","null");
-
+        mc=sharedPreferences.getString("mc","null");
+        karma=sharedPreferences.getInt("karma",0);
+        mc_count=sharedPreferences.getInt("mc_count",0);
+        mip_count=sharedPreferences.getInt("mip_count",0);
         Button completed_btn=(Button)findViewById(R.id.completed_btn);
         completed_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,8 +92,27 @@ public class ModulesActivity extends AppCompatActivity {
                 editor.putString("mip", mip);
 
                 Log.e("mytag1", "onResponse: ---------"+mip );
-                editor.commit();
 
+                mykarma=karma;
+                Log.e("mytag3", "onClick: module mccccc"+mc+"----"+coursetitle);
+
+
+                if(mc.contains(coursetitle))
+                {}
+                else {
+                    // TODO: 18-12-2017 add karma points +30
+                     myurl2="http://ec2-52-14-50-89.us-east-2.compute.amazonaws.com/api/updatekarma/" +tempnick+ "/30";
+                    addkarmapoints(myurl2);
+                    mykarma=karma+30;
+                    editor.putInt("mc_count",mc_count+1);
+
+
+                }
+                editor.putInt("mip_count",mip_count-1);
+                editor.putString("mc",mc+","+coursetitle);
+                editor.putInt("karma",mykarma);
+                Log.e("mytag3", "onClick: module link"+myurl2);
+                editor.commit();
                 finish();
 
             }
@@ -134,10 +163,37 @@ public class ModulesActivity extends AppCompatActivity {
 
     }
 
+    void addkarmapoints(String myurl2)
+    {
+
+        JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, myurl2,null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.e("Respone",response.toString());
+                try {
+                    Log.e("hii","HII");
+                    karmaresponse=response.toString();
+                    if(karmaresponse.equalsIgnoreCase("true")){}else {karmaresponse="error";}
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context,"Error response ",Toast.LENGTH_SHORT).show();
+            }
+        });
+        RequestQueue queue= Volley.newRequestQueue(context);
+        queue.add(jsonObjectRequest);
+
+    }
+
     private int completed() {
 
 
-        String tempnick=nickname;
+         tempnick=nickname;
         tempnick=tempnick.replace(" ","%20");
         Log.e("mytag1", "completed: nicknameeeeeeeeeeeee"+tempnick+"-------"+nickname );
         JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET,"http://ec2-52-14-50-89.us-east-2.compute.amazonaws.com/api/coursecompleted/"+tempnick+"/"+courseid,null, new Response.Listener<JSONObject>() {

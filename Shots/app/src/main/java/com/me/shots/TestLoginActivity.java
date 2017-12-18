@@ -1,21 +1,26 @@
 package com.me.shots;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -54,11 +59,20 @@ public class TestLoginActivity extends AppCompatActivity {
     //int count=0;
     String name,pass;
     SharedPreferences sharedPreferences;
+
+    private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.8F);
+
+    private int progressBarStatus = 0;
+
+    ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_login);
 
+        progressBar= (ProgressBar) findViewById(R.id.progress);
+        progressBar.setVisibility(View.GONE);
         sharedPreferences=getSharedPreferences("MYSHAREDPREFERENCES",MODE_PRIVATE);
           name=sharedPreferences.getString("email",null);
        pass=sharedPreferences.getString("password",null);
@@ -86,13 +100,21 @@ public class TestLoginActivity extends AppCompatActivity {
             else {
             Log.e("mytag","sharedprefnottttttttworking======"+name+"-----"+pass);
 
-            Button loginbtn = (Button) findViewById(R.id.loginbtn);
+             Button loginbtn = (Button) findViewById(R.id.loginbtn);
             loginbtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    dialog = new Dialog(TestLoginActivity.this,R.style.Theme_AppCompat_Light_Dialog_Alert);
-                    dialog.setContentView(R.layout.loading_dialog);
-                    dialog.show();
+
+                    v.startAnimation(buttonClick);
+
+
+                    // loginbtn.setBackgroundColor(Color.BLUE);
+
+                 //   progressBar.setVisibility(View.VISIBLE);
+
+//                    dialog = new Dialog(TestLoginActivity.this,R.style.Theme_AppCompat_Light_Dialog_Alert);
+//                    dialog.setContentView(R.layout.loading_dialog);
+//                    dialog.show();
                     login();
                 }
             });
@@ -134,7 +156,8 @@ public class TestLoginActivity extends AppCompatActivity {
                 if (LOGIN_result.equals("False")||LOGIN_result.equalsIgnoreCase("error")) {
                     usernametxt.setError("Wrong Credentials..");
                     passwordtxt.setError("Wrong Credentials..");
-                     dialog.dismiss();
+                     //dialog.dismiss();
+                    //progressBar.setVisibility(View.GONE);
                 } else {
                     usernametxt.setError(null);
                     passwordtxt.setError(null);
@@ -152,7 +175,8 @@ public class TestLoginActivity extends AppCompatActivity {
                     getBookmarks();
                 //    if(count==3) {
                         Intent homeint = new Intent(this, HomeActivity.class);
-                        dialog.dismiss();
+                      //  dialog.dismiss();
+                       progressBar.setVisibility(View.GONE);
                         startActivity(homeint);
                         finish();
 //                    }

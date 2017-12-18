@@ -47,10 +47,14 @@ public class ListViewAdapter extends BaseAdapter {
     Context context;
     ScrollView scrollView;
     String type;
-    String name="",name1="",mip="";
+    String name="",name1="",mip="",mc="",ctitle="";
+    String myurl;
     String url1;
+    int karma=0;
     Dialog dialog,dialog1;
+    String karmaresponse;
     SharedPreferences sharedPreferences;
+    int mip_count;
     ArrayList <String> myCourses=new ArrayList<>();                                       //to be taken from shared preferences
 //    ArrayList<domain_courses> courses_list;
 
@@ -92,6 +96,10 @@ public class ListViewAdapter extends BaseAdapter {
         int check=0;
         sharedPreferences=context.getSharedPreferences("MYSHAREDPREFERENCES",MODE_PRIVATE);
         mip=sharedPreferences.getString("mip","lol");
+        karma=sharedPreferences.getInt("karma",0);
+        mc=sharedPreferences.getString("mc","null");
+        mip_count=sharedPreferences.getInt("mip_count",0);
+
         Log.e("mip",mip);
         StringTokenizer tokenizer=new StringTokenizer(mip,",");
         myCourses.clear();
@@ -142,17 +150,37 @@ public class ListViewAdapter extends BaseAdapter {
                                 new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {
+                                        
                                         Log.e("myTag", response);
                                         Log.e("myTag", "Successful");
                                         Intent intent = new Intent(context, ModulesActivity.class);
                                         Bundle bundle = new Bundle();
-                                        bundle.putString("title", On_going_Courses_Fragment.courses_list.get(k).getTitle());
-                                        bundle.putString("link", On_going_Courses_Fragment.courses_list.get(k).getUrl());
-                                        bundle.putInt("couresid",On_going_Courses_Fragment.courses_list.get(k).getId());
-                                        intent.putExtra("mybundle",bundle);
-                                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                                        editor.putString("mip", mip + "," + On_going_Courses_Fragment.courses_list.get(k).getTitle());
-                                        editor.commit();
+                                        ctitle=On_going_Courses_Fragment.courses_list.get(k).getTitle();
+                                        
+                                        if(mip.contains(ctitle)){}
+                                        else {
+                                            int mykarma=karma;
+                                            bundle.putString("title", On_going_Courses_Fragment.courses_list.get(k).getTitle());
+                                            bundle.putString("link", On_going_Courses_Fragment.courses_list.get(k).getUrl());
+                                            bundle.putInt("couresid", On_going_Courses_Fragment.courses_list.get(k).getId());
+                                            intent.putExtra("mybundle", bundle);
+                                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                                            editor.putString("mip", mip + "," + On_going_Courses_Fragment.courses_list.get(k).getTitle());
+                                            editor.putInt("mip_count",mip_count+1);
+
+                                            if (mc.contains(ctitle)) {
+                                                Log.e("mytag3", "onResponse: mcccccc= "+mc+"---ctitle= "+ctitle+"------working" );
+
+                                            } else {
+                                                Log.e("mytag3", "onResponse: mcccccc= "+mc+"---ctitle= "+ctitle+"---- not working" );
+                                                myurl = "http://ec2-52-14-50-89.us-east-2.compute.amazonaws.com/api/updatekarma/" + name + "/2";
+                                                addkarmapoints(myurl);
+                                                mykarma=mykarma+2;
+                                            }
+                                            Log.e("mytag3", "onResponse: "+myurl );
+                                            editor.putInt("karma",mykarma);
+                                            editor.commit();
+                                        }
                                         Toast.makeText(context,"Course added",Toast.LENGTH_SHORT).show();
                                         dialog.dismiss();
                                         context.startActivity(intent);
@@ -236,6 +264,35 @@ public class ListViewAdapter extends BaseAdapter {
         }
         return lview;
     }
+
+    void addkarmapoints(String myurl)
+    {
+
+        JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, myurl,null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.e("Respone",response.toString());
+                try {
+                    Log.e("hii","HII");
+                   karmaresponse=response.toString();
+                   if(karmaresponse.equalsIgnoreCase("true")){}else {karmaresponse="error";}
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context,"Error response ",Toast.LENGTH_SHORT).show();
+            }
+        });
+        RequestQueue queue= Volley.newRequestQueue(context);
+        queue.add(jsonObjectRequest);
+
+    }
+
+
     void getDetails()
     {
         JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url1,null, new Response.Listener<JSONObject>() {
