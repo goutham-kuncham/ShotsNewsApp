@@ -51,7 +51,7 @@ public class profile_fragment extends Fragment {
         nickname=sharedPreferences.getString("nickname","Elon Musk");
         String designation=sharedPreferences.getString("designation","CEO & CTO");
         String organizationname=sharedPreferences.getString("organizationname","SpaceX Tech.");
-        String profilepic=sharedPreferences.getString("profilepic",null);
+        String profilepic=sharedPreferences.getString("profile_pic",null);
         int mip_count=sharedPreferences.getInt("mip_count",0);
         Log.e("mip_count",mip_count+"");
 
@@ -74,7 +74,10 @@ public class profile_fragment extends Fragment {
         TextView notifications=(TextView)view.findViewById(R.id.notifications);
         TextView AYO=(TextView)view.findViewById(R.id.AYO);
         TextView Logout=(TextView)view.findViewById(R.id.Logout);
+        byte [] encodeByte=Base64.decode(profilepic,Base64.DEFAULT);
+        Bitmap bitmap=BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
         imageView =(CircleImageView)view.findViewById(R.id.SetPic);
+        imageView.setImageBitmap(bitmap);
         KP.setText(karma+"");
         MIP.setText(mip_count+"");
         MC.setText(mc_count+"");
@@ -153,10 +156,10 @@ public class profile_fragment extends Fragment {
                 dialog.show();
             }
         });
-        while (HomeActivity.pro==null)
-        {
-        }
-           imageView.setImageBitmap(HomeActivity.pro);
+//        while (HomeActivity.pro==null)
+//        {
+//        }
+//           imageView.setImageBitmap(HomeActivity.pro);
 
         return view;
     }
