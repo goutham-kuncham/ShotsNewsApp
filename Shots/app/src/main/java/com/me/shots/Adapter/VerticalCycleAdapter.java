@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -83,9 +84,32 @@ public class VerticalCycleAdapter extends PagerAdapter {
         TextView title= (TextView) view.findViewById(R.id.newsTitle);
         TextView timestamp= (TextView) view.findViewById(R.id.newsTimeStamp);
         Log.d("MYTag", "instantiateItem: "+position);
-        ImageView imageView= (ImageView) view.findViewById(R.id.newsImage);
-        NewsPOGO.currentPosition=position;
+        String timeedit=NewsPOGO.newsArray.get(position).timestamp.substring(0,10)+"    "+NewsPOGO.newsArray.get(position).timestamp.substring(11,18);
+        textView.setText(""+NewsPOGO.newsArray.get(position).body);
+        title.setText(NewsPOGO.newsArray.get(position).title);
+        timestamp.setText(timeedit);
 
+
+        LinearLayout cardLayout= (LinearLayout) view.findViewById(R.id.cardLayout);
+        cardLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(context, WebViewActivity.class);
+                intent.putExtra("Link",NewsPOGO.newsArray.get(position).link);
+                context.startActivity(intent);
+
+            }
+        });
+
+
+
+
+        TextView likeCount= (TextView) view.findViewById(R.id.like_count);
+        likeCount.setText(NewsPOGO.newsArray.get(position).likes+"");
+
+//        NewsPOGO.currentPosition=position;
+
+        ImageView imageView= (ImageView) view.findViewById(R.id.newsImage);
         if(NewsPOGO.newsArray.get(position).news_image==null)
         {
             new ImageDownloaderTask(imageView,position).execute(NewsPOGO.newsArray.get(position).image);
@@ -97,7 +121,7 @@ public class VerticalCycleAdapter extends PagerAdapter {
 
         if(position==0)
         {
-            for(int i=1;i<=10;i++)       //123456789                                                                                           //fetching next 9 images
+            for(int i=1;i<=10;i++)
             {
                 if(position+i==NewsPOGO.newsArray.size())
                     break;
@@ -111,22 +135,6 @@ public class VerticalCycleAdapter extends PagerAdapter {
             if(((position+i)<NewsPOGO.newsArray.size())&&NewsPOGO.newsArray.get(position+i).news_image==null)
                 new ImageDownloaderTask(imageView,position+i,false).execute(NewsPOGO.newsArray.get(position+i).image);
         }
-
-        String timeedit=NewsPOGO.newsArray.get(position).timestamp.substring(0,10)+"    "+NewsPOGO.newsArray.get(position).timestamp.substring(11,18);
-        textView.setText(""+NewsPOGO.newsArray.get(position).body);
-        title.setText(NewsPOGO.newsArray.get(position).title);
-        timestamp.setText(timeedit);
-
-        title.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(context, WebViewActivity.class);
-                intent.putExtra("Link",NewsPOGO.newsArray.get(position).link);
-                context.startActivity(intent);
-
-            }
-        });
-
 
         SharedPreferences sharedPreferences=context.getSharedPreferences("MYSHAREDPREFERENCES",MODE_PRIVATE);
         final String userId=sharedPreferences.getString("userid",null);
