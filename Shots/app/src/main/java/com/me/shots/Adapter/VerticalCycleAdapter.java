@@ -104,7 +104,7 @@ public class VerticalCycleAdapter extends PagerAdapter {
 
 
 
-        TextView likeCount= (TextView) view.findViewById(R.id.like_count);
+        final TextView likeCount= (TextView) view.findViewById(R.id.like_count);
         likeCount.setText(NewsPOGO.newsArray.get(position).likes+"");
 
 //        NewsPOGO.currentPosition=position;
@@ -157,11 +157,15 @@ public class VerticalCycleAdapter extends PagerAdapter {
                 if(!NewsPOGO.newsArray.get(position).liked)
                 {
                     NewsPOGO.newsArray.get(position).liked=true;
+                    NewsPOGO.newsArray.get(position).likes++;
+                    likeCount.setText(NewsPOGO.newsArray.get(position).likes+"");
                     new LikeTask(NewsPOGO.newsArray.get(position).id+"",userId,0).execute();
                     like_btn.setCompoundDrawablesRelativeWithIntrinsicBounds(0,R.drawable.love,0,0);
                 }
                 else
                 {
+                    NewsPOGO.newsArray.get(position).likes--;
+                    likeCount.setText(NewsPOGO.newsArray.get(position).likes+"");
                     NewsPOGO.newsArray.get(position).liked=false;
                     new LikeTask(NewsPOGO.newsArray.get(position).id+"",userId,1).execute();
                     like_btn.setCompoundDrawablesRelativeWithIntrinsicBounds(0,R.drawable.unlove,0,0);
