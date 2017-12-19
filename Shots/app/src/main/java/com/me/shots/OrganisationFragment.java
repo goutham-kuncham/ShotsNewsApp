@@ -5,9 +5,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 
@@ -32,6 +34,16 @@ public class OrganisationFragment extends Fragment {
         String o_cto=sharedPreferences.getString("orga_cto","lol");
         String o_body=sharedPreferences.getString("orga_body","lol");
         View view=inflater.inflate(R.layout.fragment_organisation, container, false);
+
+        Button backbtn= (Button) view.findViewById(R.id.back_btnorg);
+        backbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm=getActivity().getSupportFragmentManager();
+                fm.popBackStack();
+
+            }
+        });
         TextView orga_name=(TextView)view.findViewById(R.id.orga_name);
         orga_name.setText(o_n);
         TextView orga_ceo=(TextView)view.findViewById(R.id.orga_ceo);

@@ -132,6 +132,7 @@ public class HomeActivity extends AppCompatActivity {
         FragmentManager fragmentManager=getSupportFragmentManager();
         FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.homeFrame_PlaceHolder,fragment);
+
         fragmentTransaction.commit();
 
     }

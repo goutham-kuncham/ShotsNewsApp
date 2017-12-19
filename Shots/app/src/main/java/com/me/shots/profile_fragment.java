@@ -93,6 +93,7 @@ public class profile_fragment extends Fragment {
                 FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.homeFrame_PlaceHolder,fragment);
+                fragmentTransaction.addToBackStack("oraganisation");
                 fragmentTransaction.commit();
             }
         });
@@ -116,6 +117,7 @@ public class profile_fragment extends Fragment {
                 FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.homeFrame_PlaceHolder,fragment);
+                fragmentTransaction.addToBackStack("domains");
                 fragmentTransaction.commit();
             }
         });

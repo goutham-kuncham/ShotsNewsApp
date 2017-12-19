@@ -2,23 +2,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.me.shots.DomainFragment">
+    tools:context="com.me.shots.DomainFragment"
+    android:background="#FFFFFF">
 
     <!-- TODO: Update blank fragment layout -->
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="20dp"
+
+       android:drawableLeft="@drawable/backbtn32"
+        android:paddingLeft="20dp"
+        android:background="@null"
+
+        android:id="@+id/bac_btn"
+        />
     <TextView
         android:id="@+id/lol"
+        android:layout_toRightOf="@+id/bac_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Choose Your Interests"
         android:textSize="20dp"
         android:textStyle="bold"
-        android:layout_margin="20dp"
-        android:paddingLeft="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+
         android:textColor="#000000"
         />
+    <!--android:paddingLeft="30dp"-->
 
     <com.me.shots.Non_extendable_ListView
         android:id="@+id/domainlist_display"

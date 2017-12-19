@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,6 +62,19 @@ int id_selected;
 //        ArrayList<domain_courses> courses_list=(ArrayList<domain_courses>)getArguments().getSerializable("Domain_Courses_list");
 //        Log.e("mytag",courses_list.size()+"lololol");
         View view = inflater.inflate(R.layout.fragment_domain_list, container, false);
+        Button backbtn= (Button) view.findViewById(R.id.back_btncourse);
+        backbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.homeFrame_PlaceHolder,new On_going_Courses_Fragment());
+
+                fragmentTransaction.commit();
+                Log.e("mytag3", "onClick: backkkkkkkk" );
+
+            }
+        });
         TextView dn=(TextView)view.findViewById(R.id.domain_name);
         TextView promt=(TextView)view.findViewById(R.id.no_courses);
         dn.setText(name);

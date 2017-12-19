@@ -4,11 +4,13 @@ package com.me.shots;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -35,13 +37,17 @@ public class DomainFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              final Bundle savedInstanceState) {
         sharedPreferences=this.getActivity().getSharedPreferences("MYSHAREDPREFERENCES",MODE_PRIVATE);
         interests=sharedPreferences.getString("interests","lol");
         mydomain=sharedPreferences.getString("mydomain","Nodomain");
         final ArrayList<String> my_interests=new ArrayList<>();
         StringTokenizer st1=new StringTokenizer(interests,",");
+
+
+
+
 
         my_interests.add(mydomain);
         if(mydomain.equals("Nodomain")||mydomain.equals("null"))
@@ -54,6 +60,18 @@ public class DomainFragment extends Fragment {
         }
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_domain, container, false);
+
+        Button backbt= (Button) view.findViewById(R.id.bac_btn);
+        backbt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                FragmentManager fm=getActivity().getSupportFragmentManager();
+                fm.popBackStack();
+
+            }
+        });
+
         ListView list=(ListView)view.findViewById(R.id.domainlist_display);
         FullDomainListAdapter adapter=new FullDomainListAdapter(getContext());
         list.setAdapter(adapter);
@@ -110,5 +128,7 @@ public class DomainFragment extends Fragment {
         });
         return  view;
     }
+
+
 
 }

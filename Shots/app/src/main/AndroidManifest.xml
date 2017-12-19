@@ -45,7 +45,8 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".Utils.ModulesActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:label="Modules"
+            android:theme="@style/Theme.AppCompat.Light"/>
         <activity
             android:name=".PptWebViewActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
