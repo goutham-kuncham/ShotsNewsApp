@@ -5,15 +5,21 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 /**
  * Created by Half_BlooD PrincE on 10/6/2017.
  */
 
 public class VerticalViewPager extends ViewPager {
+
+    boolean flag=true;
+    Context context;
+
     public VerticalViewPager(Context context) {
         super(context);
         init();
+        this.context=context;
     }
 
     public VerticalViewPager(Context context, AttributeSet attrs) {
@@ -22,7 +28,7 @@ public class VerticalViewPager extends ViewPager {
     }
     private void init() {
         // The majority of the magic happens here
-        setPageTransformer(true, new VerticalPageTransformer());
+        setPageTransformer(flag, new VerticalPageTransformer());
         // The easiest way to get rid of the overscroll drawing that happens on the left and right
         setOverScrollMode(OVER_SCROLL_NEVER);
     }
@@ -70,7 +76,37 @@ public class VerticalViewPager extends ViewPager {
         }
     }
 
+    private float x1,x2,y1,y2;
+    static final int MIN_DISTANCE = 50;
+
     private MotionEvent swapXY(MotionEvent ev) {
+        switch(ev.getAction())
+        {
+            case MotionEvent.ACTION_DOWN:
+                x1 = ev.getX();
+                y1=ev.getY();
+                break;
+            case MotionEvent.ACTION_UP:
+                x2 = ev.getX();
+                y2=ev.getY();
+
+                float deltaX = x2 - x1;
+                float deltaY = y2 - y1;
+
+                if (Math.abs(deltaX) > MIN_DISTANCE)
+                {
+                    setPageTransformer(false, new VerticalPageTransformer());
+                    flag=true;
+                }
+
+                if (Math.abs(deltaY) > MIN_DISTANCE)
+                {
+                    setPageTransformer(true, new VerticalPageTransformer());
+                    flag=false;
+                }
+                break;
+        }
+//        return super.onTouchEvent(ev);
         float width = getWidth();
         float height = getHeight();
 
