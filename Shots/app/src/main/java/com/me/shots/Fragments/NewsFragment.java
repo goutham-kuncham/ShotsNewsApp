@@ -108,8 +108,10 @@ public class NewsFragment extends Fragment {
                     Log.e("myTag","loading news");
             dialog = new Dialog(getActivity(), R.style.Theme_AppCompat_Light_Dialog_Alert);
             dialog.setContentView(R.layout.loading_dialog);
+                    dialog.setCanceledOnTouchOutside(false);
             dialog.show();
-
+             myThread mthread=new myThread();
+             mthread.start();
                      //   getNews();
                 }
                 else if(count>=1 && state==0)
@@ -178,129 +180,126 @@ public class NewsFragment extends Fragment {
 
         return view;
     }
-    void getNews() {
-        String jsonURL="http://ec2-52-14-50-89.us-east-2.compute.amazonaws.com/api/post";
-        Log.e("url",jsonURL);
-        try {
-            String jsonString=new getNewsString().execute(jsonURL).get();
-            Log.e("url",jsonURL);
-            if(jsonString.equalsIgnoreCase("error"))
-            {
-                //ERROR FETCHING NEWS!!!
-                Log.e("hi","lol");
-            }
-            else
-            {
-                JSONObject response=new JSONObject(jsonString);
-                JSONArray jsonArray=response.getJSONArray("objects");
-                if(jsonArray.length()!=NewsPOGO.newsArray.size())
-                {
-                    NewsPOGO.newsArray.clear();
-                    for(int i=jsonArray.length()-1;i>=0;i--)
-                    {
-                        NewsPOGO newsPOGO;
-                        JSONObject jsonObject= jsonArray.getJSONObject(i);
 
-                        newsPOGO=new NewsPOGO();
-                        newsPOGO.body=jsonObject.getString("body");
-                        newsPOGO.category=jsonObject.getString("category");
-                        newsPOGO.content_type=jsonObject.getString("content_type");
-                        newsPOGO.id=jsonObject.getInt("id");
-                        newsPOGO.image=jsonObject.getString("image");
-                        newsPOGO.likes=jsonObject.getInt("likes");
-                        newsPOGO.link=jsonObject.getString("link");
-                        newsPOGO.timestamp=jsonObject.getString("timestamp");
-                        newsPOGO.title=jsonObject.getString("title");
-                        newsPOGO.types=jsonObject.getString("types");
-                        newsPOGO.user_id=jsonObject.getInt("user_id");
-                        NewsPOGO.newsArray.add(newsPOGO);
+    class myThread extends Thread {
 
+        public void run() {
+            String jsonURL = "http://ec2-52-14-50-89.us-east-2.compute.amazonaws.com/api/post";
+            Log.e("url", jsonURL);
+            try {
+                String jsonString = new getNewsString().execute(jsonURL).get();
+                Log.e("url", jsonURL);
+                if (jsonString.equalsIgnoreCase("error")) {
+                    //ERROR FETCHING NEWS!!!
+                    Log.e("hi", "lol");
+                } else {
+                    JSONObject response = new JSONObject(jsonString);
+                    JSONArray jsonArray = response.getJSONArray("objects");
+                    if (jsonArray.length() != NewsPOGO.newsArray.size()) {
+                        NewsPOGO.newsArray.clear();
+                        for (int i = jsonArray.length() - 1; i >= 0; i--) {
+                            NewsPOGO newsPOGO;
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                            newsPOGO = new NewsPOGO();
+                            newsPOGO.body = jsonObject.getString("body");
+                            newsPOGO.category = jsonObject.getString("category");
+                            newsPOGO.content_type = jsonObject.getString("content_type");
+                            newsPOGO.id = jsonObject.getInt("id");
+                            newsPOGO.image = jsonObject.getString("image");
+                            newsPOGO.likes = jsonObject.getInt("likes");
+                            newsPOGO.link = jsonObject.getString("link");
+                            newsPOGO.timestamp = jsonObject.getString("timestamp");
+                            newsPOGO.title = jsonObject.getString("title");
+                            newsPOGO.types = jsonObject.getString("types");
+                            newsPOGO.user_id = jsonObject.getInt("user_id");
+                            NewsPOGO.newsArray.add(newsPOGO);
+
+                        }
+                        Log.d("explore", "getNews: " + NewsPOGO.newsArray.size());
                     }
-                    Log.d("explore", "getNews: "+NewsPOGO.newsArray.size());
                 }
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-
-    class getNewsString extends AsyncTask<String,Void,String>
-    {
-
-        public static final String REQUEST_METHOD = "GET";
-        public static final int READ_TIMEOUT = 15000;
-        public static final int CONNECTION_TIMEOUT = 15000;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            String stringUrl = params[0];
-
-            Log.e("mytag", "doInBackground: "+"inside aclling"+stringUrl );
-            String result="ERROR";
-            String inputLine;
-            int responsecode=0;
-            try{
-                URL loginUrl=new URL(stringUrl);
-                HttpURLConnection connection =(HttpURLConnection)
-                        loginUrl.openConnection();
-                connection.setRequestMethod(REQUEST_METHOD);
-                connection.setReadTimeout(READ_TIMEOUT);
-                connection.setConnectTimeout(CONNECTION_TIMEOUT);
-
-                connection.connect();
-                responsecode=connection.getResponseCode();
-                Log.e("mytag", "doInBackground: "+responsecode );
-                InputStreamReader streamReader = new
-                        InputStreamReader(connection.getInputStream());
-
-                BufferedReader reader = new BufferedReader(streamReader);
-                StringBuilder stringBuilder = new StringBuilder();
-
-
-                while((inputLine = reader.readLine()) != null){
-                    stringBuilder.append(inputLine);
-                }
-
-                reader.close();
-                streamReader.close();
-                Log.e("mytag","Value==="+stringBuilder.toString());
-                result = stringBuilder.toString();
-                Log.e("mytag", "doInBackground: "+result );
-            } catch (ProtocolException e) {
+            } catch (JSONException e) {
                 e.printStackTrace();
-            } catch (MalformedURLException e) {
+            } catch (InterruptedException e) {
                 e.printStackTrace();
-            } catch (IOException e) {
+            } catch (ExecutionException e) {
                 e.printStackTrace();
             }
 
-            Log.e("mytag", "doInBackground: "+result );
-            if(responsecode==200)
-                return result;
-            else return "error";
         }
 
-        @Override
-        protected void onPostExecute(String s) {
-       //     progressBar.setVisibility(View.INVISIBLE);
-            dialog.dismiss();
-            super.onPostExecute(s);
-          //  swipeRefreshLayout.clearAnimation();
+
+        class getNewsString extends AsyncTask<String, Void, String> {
+
+            public static final String REQUEST_METHOD = "GET";
+            public static final int READ_TIMEOUT = 15000;
+            public static final int CONNECTION_TIMEOUT = 15000;
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+                String stringUrl = params[0];
+
+                Log.e("mytag", "doInBackground: " + "inside aclling" + stringUrl);
+                String result = "ERROR";
+                String inputLine;
+                int responsecode = 0;
+                try {
+                    URL loginUrl = new URL(stringUrl);
+                    HttpURLConnection connection = (HttpURLConnection)
+                            loginUrl.openConnection();
+                    connection.setRequestMethod(REQUEST_METHOD);
+                    connection.setReadTimeout(READ_TIMEOUT);
+                    connection.setConnectTimeout(CONNECTION_TIMEOUT);
+
+                    connection.connect();
+                    responsecode = connection.getResponseCode();
+                    Log.e("mytag", "doInBackground: " + responsecode);
+                    InputStreamReader streamReader = new
+                            InputStreamReader(connection.getInputStream());
+
+                    BufferedReader reader = new BufferedReader(streamReader);
+                    StringBuilder stringBuilder = new StringBuilder();
+
+
+                    while ((inputLine = reader.readLine()) != null) {
+                        stringBuilder.append(inputLine);
+                    }
+
+                    reader.close();
+                    streamReader.close();
+                    Log.e("mytag", "Value===" + stringBuilder.toString());
+                    result = stringBuilder.toString();
+                    Log.e("mytag", "doInBackground: " + result);
+                } catch (ProtocolException e) {
+                    e.printStackTrace();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                Log.e("mytag", "doInBackground: " + result);
+                if (responsecode == 200)
+                    return result;
+                else return "error";
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                //     progressBar.setVisibility(View.INVISIBLE);
+                dialog.dismiss();
+                super.onPostExecute(s);
+                //  swipeRefreshLayout.clearAnimation();
+            }
         }
+
     }
-
-
 
 }
