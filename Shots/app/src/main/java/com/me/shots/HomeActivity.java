@@ -15,6 +15,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -54,6 +55,7 @@ public class HomeActivity extends AppCompatActivity {
     Context context=this;
     Fragment fragment=null;
     static Bitmap pro;
+
     String email;
     int karma=0;
     @Override
@@ -121,7 +123,7 @@ public class HomeActivity extends AppCompatActivity {
                 fragment=new On_going_Courses_Fragment();
                 break;
             case R.id.btn_explore:
-                getNews();
+          //      getNews();
                 fragment=new NewsFragment();
                 break;
             case R.id.btn_profile:
