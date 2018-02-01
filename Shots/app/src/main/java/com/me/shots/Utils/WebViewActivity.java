@@ -117,7 +117,7 @@ public class WebViewActivity extends AppCompatActivity {
 
     String generateURL()
     {
-        sharedPreferences= sharedPreferences=getSharedPreferences("MYSHAREDPREFERENCES",MODE_PRIVATE);
+        sharedPreferences=getSharedPreferences("MYSHAREDPREFERENCES",MODE_PRIVATE);
         String nickname=sharedPreferences.getString("nickname","null");
         nickname=nickname.replace(" ","%20");
         String myurl="http://ec2-52-14-50-89.us-east-2.compute.amazonaws.com/api/updatekarma/" +nickname+ "/3";
@@ -138,6 +138,9 @@ public class WebViewActivity extends AppCompatActivity {
                     {
                         int karma=sharedPreferences.getInt("karma",1);
                         karma+=3;
+                        SharedPreferences.Editor editor=sharedPreferences.edit();
+                        editor.putInt("karma",karma);
+                        editor.apply();
                     }
                     else {karmaresponse="error";}
                 } catch (Exception e) {
