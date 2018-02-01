@@ -197,6 +197,7 @@ public class HomeActivity extends AppCompatActivity {
                         newsPOGO.timestamp=jsonObject.getString("timestamp");
                         newsPOGO.title=jsonObject.getString("title");
                         newsPOGO.types=jsonObject.getString("types");
+                        newsPOGO.notification_worthy=jsonObject.getString("notification_worthy");
                         newsPOGO.user_id=jsonObject.getInt("user_id");
                         NewsPOGO.newsArray.add(newsPOGO);
 

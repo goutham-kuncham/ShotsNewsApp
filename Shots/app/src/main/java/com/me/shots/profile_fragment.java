@@ -107,7 +107,8 @@ public class profile_fragment extends Fragment {
         notifications.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(),"Notification",Toast.LENGTH_SHORT).show();
+                Intent intent= new Intent(getContext(), NotificationsActivity.class);
+                startActivity(intent);
             }
         });
         domain.setOnClickListener(new View.OnClickListener() {

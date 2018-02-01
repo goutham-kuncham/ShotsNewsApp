@@ -39,14 +39,14 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".TestLoginActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".HomeActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".Utils.ModulesActivity"
             android:label="Modules"
-            android:theme="@style/Theme.AppCompat.Light"/>
+            android:theme="@style/Theme.AppCompat.Light" />
         <activity
             android:name=".PptWebViewActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -65,7 +65,8 @@
         <activity
             android:name=".BookmarksActivity"
             android:label="@string/title_activity_bookmarks"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
+        <activity android:name=".NotificationsActivity"></activity>
     </application>
 
 </manifest>
