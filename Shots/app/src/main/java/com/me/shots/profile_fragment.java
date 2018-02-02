@@ -25,6 +25,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.me.shots.Adapter.BookmarksAdapter;
+import com.me.shots.GoogleAnalytics.MyApplication;
 import com.me.shots.Utils.MySingleton;
 import com.me.shots.Utils.NewsPOGO;
 
@@ -47,6 +48,9 @@ public class profile_fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment0
+        Log.e("Testing", "onCreateView: Google Analytics testing..!!" );
+
+        MyApplication.getInstance().trackScreenView("Profile Fragment");
 
         sharedPreferences=getActivity().getSharedPreferences("MYSHAREDPREFERENCES", Context.MODE_PRIVATE);
         String uname=sharedPreferences.getString("username",null);

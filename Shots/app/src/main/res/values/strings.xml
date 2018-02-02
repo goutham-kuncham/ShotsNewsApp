@@ -22,4 +22,17 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="title_activity_bookmarks">BookmarksActivity</string>
+
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_second">Second Activity</string>
+    <string name="toast_track_exception">Exception is recorded. Check the Crashes and Exceptions on Google Dashboard!</string>
+    <string name="toast_app_crash">The app will crash now! Check the Crashes and Exceptions on Google Dashboard!</string>
+    <string name="fragment_footer">Fragment is loaded! Check the screen view on Google Analytics Dashboard.</string>
+    <string name="msg_instructions">Click on each button to see the appropriate tracking on Google Analytics</string>
+    <string name="btn_second_screen">Second Screen</string>
+    <string name="btn_send_event">Track Event</string>
+    <string name="btn_exception_tracking">Track Exception</string>
+    <string name="btn_app_crash">Track App Crash</string>
+    <string name="btn_load_fragment">Fragment Tracking</string>
 </resources>

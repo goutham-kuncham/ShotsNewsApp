@@ -64,6 +64,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         sharedPreferences=getSharedPreferences("MYSHAREDPREFERENCES",MODE_PRIVATE);
+        Log.e("Testing", "onCreateView: Google Analytics testing..!!" );
 
         email=sharedPreferences.getString("email",null);
         Log.e("email",email);

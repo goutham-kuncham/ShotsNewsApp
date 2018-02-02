@@ -46,7 +46,7 @@ public class DomainFragment extends Fragment {
         StringTokenizer st1=new StringTokenizer(interests,",");
 
 
-
+        Log.e("Testing", "onCreateView: Google Analytics testing..!!" );
 
 
         my_interests.add(mydomain);

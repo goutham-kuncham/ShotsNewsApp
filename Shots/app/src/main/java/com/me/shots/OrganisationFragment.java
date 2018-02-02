@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.me.shots.GoogleAnalytics.MyApplication;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,6 +30,9 @@ public class OrganisationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+        MyApplication.getInstance().trackScreenView("About Organisation Fragment");
+
         SharedPreferences sharedPreferences=getActivity().getSharedPreferences("MYSHAREDPREFERENCES", Context.MODE_PRIVATE);
         String o_n=sharedPreferences.getString("orga_name","lol");
         String o_ceo=sharedPreferences.getString("orga_ceo","lol");

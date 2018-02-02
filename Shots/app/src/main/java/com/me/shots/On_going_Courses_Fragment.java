@@ -27,6 +27,7 @@ import com.android.volley.toolbox.Volley;
 import com.me.shots.Adapter.DomainListAdapter;
 import com.me.shots.Adapter.ListViewAdapter;
 import com.me.shots.Fragments.domain_list;
+import com.me.shots.GoogleAnalytics.MyApplication;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,6 +57,7 @@ public class On_going_Courses_Fragment extends android.support.v4.app.Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment0
 
+        MyApplication.getInstance().trackScreenView("Learn Fragment");
 
         //return inflater.inflate(R.layout.fragment_calls, container, false);
         View view=inflater.inflate(R.layout.on_going_courses_fragment, container, false);

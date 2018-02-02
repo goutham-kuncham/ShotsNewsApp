@@ -43,5 +43,7 @@ dependencies {
     compile 'me.itangqi.waveloadingview:library:0.3.5'
     compile 'jp.wasabeef:blurry:2.1.1'//used to blur
     compile 'de.hdodenhof:circleimageview:2.1.0'
+    compile 'com.google.android.gms:play-services-analytics:11.4.0'
+
     testCompile 'junit:junit:4.12'
 }
