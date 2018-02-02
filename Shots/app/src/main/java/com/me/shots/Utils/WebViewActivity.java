@@ -3,11 +3,13 @@ package com.me.shots.Utils;
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,13 +20,22 @@ import android.widget.Toolbar;
 
 //import com.shorts.jgirish.snu_pro.R;
 import com.*;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.me.shots.R;
+
+import org.json.JSONObject;
 
 public class WebViewActivity extends AppCompatActivity {
 
     WebView webView;
     private MenuItem menuItem;
     String Link;
+    SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,5 +113,50 @@ public class WebViewActivity extends AppCompatActivity {
             android.content.ClipData clip = android.content.ClipData.newPlainText("Copied Text", text);
             clipboard.setPrimaryClip(clip);
         }
+    }
+
+    String generateURL()
+    {
+        sharedPreferences=getSharedPreferences("MYSHAREDPREFERENCES",MODE_PRIVATE);
+        String nickname=sharedPreferences.getString("nickname","null");
+        nickname=nickname.replace(" ","%20");
+        String myurl="http://ec2-52-14-50-89.us-east-2.compute.amazonaws.com/api/updatekarma/" +nickname+ "/3";
+        return myurl;
+    }
+
+    void addkarmapoints()
+    {
+        String myurl=generateURL();
+        JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, myurl,null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.e("Respone",response.toString());
+                try {
+                    Log.e("hii","HII");
+                    String karmaresponse=response.toString();
+                    if(karmaresponse.equalsIgnoreCase("true"))
+                    {
+                        int karma=sharedPreferences.getInt("karma",1);
+                        karma+=3;
+                        SharedPreferences.Editor editor=sharedPreferences.edit();
+                        editor.putInt("karma",karma);
+                        editor.apply();
+                    }
+                    else {karmaresponse="error";}
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //              Toast.makeText(getApplicationContext(),"Error response ",Toast.LENGTH_SHORT).show();
+            }
+        });
+        Log.d("Karma Url", "addkarmapoints: "+myurl);
+        RequestQueue queue= Volley.newRequestQueue(getApplicationContext());
+        queue.add(jsonObjectRequest);
+
     }
 }

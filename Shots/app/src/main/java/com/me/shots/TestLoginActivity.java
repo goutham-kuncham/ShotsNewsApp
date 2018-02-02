@@ -437,6 +437,7 @@ public class TestLoginActivity extends AppCompatActivity {
                         newsPOGO.content_type=jsonObject.getString("content_type");
                         newsPOGO.id=jsonObject.getInt("id");
                         newsPOGO.image=jsonObject.getString("image");
+                        newsPOGO.notification_worthy=jsonObject.getString("notification_worthy");
                         newsPOGO.likes=jsonObject.getInt("likes");
                         newsPOGO.link=jsonObject.getString("link");
                         newsPOGO.timestamp=jsonObject.getString("timestamp");
