@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/loginbg"
+
     tools:context="com.me.shots.LoginActivity">
 
     <!-- Login progress -->
@@ -71,11 +71,10 @@
 
                     <AutoCompleteTextView
                         android:id="@+id/username"
+                        android:hint="Email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Email"
                         android:inputType="text"
-                        android:textColor="#FFFFFF"
                         android:maxLines="1"
                         android:singleLine="true" />
 
@@ -87,16 +86,30 @@
 
                     <EditText
                         android:id="@+id/password"
+                        android:hint="@string/prompt_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/prompt_password"
-                        android:imeActionId="@+id/login"
-                        android:imeActionLabel="@string/action_sign_in_short"
-                        android:imeOptions="actionUnspecified"
                         android:inputType="textPassword"
                         android:maxLines="1"
-                        android:textColor="#FFFFFF"
                         android:singleLine="true" />
+
+
+                <!--<android.support.design.widget.TextInputLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content">-->
+
+                    <!--<EditText-->
+                        <!--android:id="@+id/password"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:hint="@string/prompt_password"-->
+                        <!--android:imeActionId="@+id/login"-->
+                        <!--android:imeActionLabel="@string/action_sign_in_short"-->
+                        <!--android:imeOptions="actionUnspecified"-->
+                        <!--android:inputType="textPassword"-->
+                        <!--android:maxLines="1"-->
+
+                        <!--android:singleLine="true" />-->
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -107,6 +120,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:background="#1D3044"
+                    android:shadowRadius="3"
                     android:textColor="#FFFFFF"
                     android:text="@string/action_sign_in"
                     android:textStyle="bold" />

@@ -22,6 +22,7 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="title_activity_bookmarks">BookmarksActivity</string>
+    <string name="title_activity_notifications">NotificationsActivity</string>
 
 
     <string name="action_settings">Settings</string>

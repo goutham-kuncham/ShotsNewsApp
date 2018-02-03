@@ -77,7 +77,7 @@ public class VerticalViewPager extends ViewPager {
     }
 
     private float x1,x2,y1,y2;
-    static final int MIN_DISTANCE = 50;
+    static final int MIN_DISTANCE = 5;
 
     private MotionEvent swapXY(MotionEvent ev) {
         switch(ev.getAction())

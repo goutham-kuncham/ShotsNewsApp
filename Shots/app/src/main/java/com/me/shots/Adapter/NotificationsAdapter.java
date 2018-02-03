@@ -113,8 +113,12 @@ public class NotificationsAdapter extends PagerAdapter {
         TextView textView= (TextView) view.findViewById(R.id.newsText);
         TextView title= (TextView) view.findViewById(R.id.newsTitle);
         TextView timestamp= (TextView) view.findViewById(R.id.newsTimeStamp);
-        Log.d("bookmark", "instantiateItem: "+position);
         ImageView imageView= (ImageView) view.findViewById(R.id.newsImage);
+
+
+        final TextView likeCount= (TextView) view.findViewById(R.id.like_count);
+        likeCount.setText(notifications.get(position).likes+"");
+
 
         if(notifications.get(position).news_image==null)
         {
@@ -180,10 +184,14 @@ public class NotificationsAdapter extends PagerAdapter {
                 {
                     notifications.get(position).liked=true;
                     new LikeTask(notifications.get(position).id+"",userId,0).execute();
+                    notifications.get(position).likes++;
+                    likeCount.setText(notifications.get(position).likes+"");
                     like_btn.setCompoundDrawablesRelativeWithIntrinsicBounds(0,R.drawable.love,0,0);
                 }
                 else
                 {
+                    notifications.get(position).likes--;
+                    likeCount.setText(notifications.get(position).likes+"");
                     notifications.get(position).liked=false;
                     new LikeTask(notifications.get(position).id+"",userId,1).execute();
                     like_btn.setCompoundDrawablesRelativeWithIntrinsicBounds(0,R.drawable.unlove,0,0);

@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -74,6 +75,7 @@ public class HomeActivity extends AppCompatActivity {
 //        getNews();
 //        getLikes();
 //        getBookmarks();
+
         fragment=new NewsFragment();
         FragmentManager fragmentManager=getSupportFragmentManager();
         FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
@@ -82,9 +84,13 @@ public class HomeActivity extends AppCompatActivity {
 
         Log.d("explore", "oncreate: "+NewsPOGO.newsArray.size());
 
-        Button learn=(Button)findViewById(R.id.btn_learn);
-        Button explore=(Button)findViewById(R.id.btn_explore);
-        Button profile=(Button)findViewById(R.id.btn_profile);
+        final Button learn=(Button)findViewById(R.id.btn_learn);
+        final Button explore=(Button)findViewById(R.id.btn_explore);
+        final Button profile=(Button)findViewById(R.id.btn_profile);
+        learn.setBackgroundColor(Color.WHITE);
+        explore.setBackgroundColor(Color.parseColor("#E1F5FE"));
+        profile.setBackgroundColor(Color.WHITE);
+
         learn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,12 +101,18 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 btnclick(view);
+                learn.setBackgroundColor(Color.parseColor("#E1F5FE"));
+                explore.setBackgroundColor(Color.WHITE);
+                profile.setBackgroundColor(Color.WHITE);
             //    getDetails();
             }
         });
         explore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                learn.setBackgroundColor(Color.WHITE);
+                explore.setBackgroundColor(Color.parseColor("#E1F5FE"));
+                profile.setBackgroundColor(Color.WHITE);
                 btnclick(view);
           //  getDetails();
             }
@@ -108,6 +120,9 @@ public class HomeActivity extends AppCompatActivity {
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                learn.setBackgroundColor(Color.WHITE);
+                explore.setBackgroundColor(Color.WHITE);
+                profile.setBackgroundColor(Color.parseColor("#E1F5FE"));
                 btnclick(view);
              //  getDetails();
 
@@ -135,7 +150,6 @@ public class HomeActivity extends AppCompatActivity {
         FragmentManager fragmentManager=getSupportFragmentManager();
         FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.homeFrame_PlaceHolder,fragment);
-
         fragmentTransaction.commit();
 
     }

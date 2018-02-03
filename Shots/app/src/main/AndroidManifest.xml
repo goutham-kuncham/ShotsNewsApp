@@ -66,7 +66,6 @@
         <activity
             android:name=".BookmarksActivity"
             android:label="@string/title_activity_bookmarks"
-<<<<<<< HEAD
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar"></activity>
 
         <receiver
@@ -95,10 +94,14 @@
         </receiver>
 
         <service android:name="com.google.android.gms.analytics.CampaignTrackingService"></service>
-=======
+
+        <activity
+            android:name=".NotificationsActivity"
+            android:label="@string/title_activity_notifications"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
-        <activity android:name=".NotificationsActivity"></activity>
->>>>>>> 6aadfb855abef977e32aff55ab9d0d94bc95dec6
+
+<!--&gt;>>>>>> 6aadfb855abef977e32aff55ab9d0d94bc95dec6-->
+<!--&gt;>>>>>> 1ad4f4c1f71a3ede9c41cd248e21ecd8176c7a70-->
     </application>
 
 </manifest>

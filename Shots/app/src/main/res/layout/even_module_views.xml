@@ -28,7 +28,6 @@
             app:wlv_titleCenterStrokeColor="@android:color/holo_blue_dark"
             app:wlv_titleCenterStrokeWidth="0dp"
             app:wlv_titleCenter="Machine Learning"
-            app:wlv_titleBottom="26%"
             app:wlv_titleCenterColor="#3FFF00FF"
             app:wlv_titleCenterSize="13sp"
             app:wlv_waveAmplitude="70"

@@ -80,7 +80,10 @@ public class profile_fragment extends Fragment {
         TextView notifications=(TextView)view.findViewById(R.id.notifications);
         TextView AYO=(TextView)view.findViewById(R.id.AYO);
         TextView Logout=(TextView)view.findViewById(R.id.Logout);
-        byte [] encodeByte=Base64.decode(profilepic,Base64.DEFAULT);
+        byte [] encodeByte= new byte[0];
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.FROYO) {
+            encodeByte = Base64.decode(profilepic,Base64.DEFAULT);
+        }
         Bitmap bitmap=BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
         imageView =(CircleImageView)view.findViewById(R.id.SetPic);
         imageView.setImageBitmap(bitmap);
@@ -164,6 +167,7 @@ public class profile_fragment extends Fragment {
                         editor.commit();
                         getActivity().finish();
                         Intent intent=new Intent(getContext(),TestLoginActivity.class);
+                        dialog.dismiss();
                         startActivity(intent);
 
                     }

@@ -50,6 +50,7 @@ public class WebViewActivity extends AppCompatActivity {
         webView.loadUrl(Link);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        addkarmapoints();
     }
 
     private void hideSystemUI() {

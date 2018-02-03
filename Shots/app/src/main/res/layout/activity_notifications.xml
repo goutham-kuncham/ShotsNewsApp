@@ -6,10 +6,18 @@
     android:layout_height="match_parent"
     tools:context="com.me.shots.NotificationsActivity">
 
-    <com.me.shots.Adapter.VerticalViewPager
+    <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/notificationsViewPager">
-    </com.me.shots.Adapter.VerticalViewPager>
+        android:id="@+id/action_refresh"
+        >
 
+        <com.me.shots.Adapter.VerticalViewPager
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="2dp"
+            android:id="@+id/notificationsViewPager">
+        </com.me.shots.Adapter.VerticalViewPager>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>

@@ -90,7 +90,7 @@ public class VerticalCycleAdapter extends PagerAdapter {
             if(NewsPOGO.newsArray.get(i).types.contains(my_interests.get(j)))
             {
                 filteredNews.add(NewsPOGO.newsArray.get(i));
-                Log.d("interests", "VerticalCycleAdapter: "+my_interests.get(j)+"  "+NewsPOGO.newsArray.get(i).body.substring(0,20));
+//                Log.d("interests", "VerticalCycleAdapter: "+my_interests.get(j)+"  "+NewsPOGO.newsArray.get(i).body.substring(0,20));
                 break;
             }
         }
@@ -108,7 +108,7 @@ public class VerticalCycleAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        Log.d("tagged", "getCount: "+filteredNews.size());
+//        Log.d("tagged", "getCount: "+filteredNews.size());
         return filteredNews.size();
     }
 

@@ -79,6 +79,8 @@ public class BookmarksAdapter extends PagerAdapter {
         TextView timestamp= (TextView) view.findViewById(R.id.newsTimeStamp);
         Log.d("bookmark", "instantiateItem: "+position);
         ImageView imageView= (ImageView) view.findViewById(R.id.newsImage);
+        final TextView likeCount= (TextView) view.findViewById(R.id.like_count);
+        likeCount.setText(bookmarks.get(position).likes+"");
 
         if(bookmarks.get(position).news_image==null)
         {
@@ -143,12 +145,16 @@ public class BookmarksAdapter extends PagerAdapter {
                 if(!bookmarks.get(position).liked)
                 {
                     bookmarks.get(position).liked=true;
+                    bookmarks.get(position).likes++;
+                    likeCount.setText(bookmarks.get(position).likes+"");
                     new LikeTask(bookmarks.get(position).id+"",userId,0).execute();
                     like_btn.setCompoundDrawablesRelativeWithIntrinsicBounds(0,R.drawable.love,0,0);
                 }
                 else
                 {
                     bookmarks.get(position).liked=false;
+                    bookmarks.get(position).likes--;
+                    likeCount.setText(bookmarks.get(position).likes+"");
                     new LikeTask(bookmarks.get(position).id+"",userId,1).execute();
                     like_btn.setCompoundDrawablesRelativeWithIntrinsicBounds(0,R.drawable.unlove,0,0);
                 }

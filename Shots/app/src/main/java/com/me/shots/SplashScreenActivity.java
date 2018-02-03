@@ -40,7 +40,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     private static int SPLASH_SCREEN_TIMEOUT=3000;
     String LOGIN_API_URL = "http://ec2-52-14-50-89.us-east-2.compute.amazonaws.com/api/auth";
     String LOGIN_result,name,pass,nickname;
-    String    url;
+    String url;
     Bitmap pro;
     int karma;
     //int count=0;
@@ -76,8 +76,6 @@ public class SplashScreenActivity extends AppCompatActivity {
             },SPLASH_SCREEN_TIMEOUT);
             url="http://ec2-52-14-50-89.us-east-2.compute.amazonaws.com/api/user?q={\"filters\":[{\"name\":\"email\",\"op\":\"eq\",\"val\":\""+name+"\"}]}";
             Log.e("mytag","sharedprefworking======"+name+"-----"+pass);
-
-
         }
         else
         {
@@ -89,9 +87,6 @@ public class SplashScreenActivity extends AppCompatActivity {
                 }
             },SPLASH_SCREEN_TIMEOUT);
         }
-
-
-
     }
     void getDetails()                                                                                    //personal details
     {
@@ -361,7 +356,6 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     class getNewsString extends AsyncTask<String,Void,String>
     {
-
         public static final String REQUEST_METHOD = "GET";
         public static final int READ_TIMEOUT = 15000;
         public static final int CONNECTION_TIMEOUT = 15000;
@@ -369,7 +363,6 @@ public class SplashScreenActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             String stringUrl = params[0];
-
             Log.e("mytag", "doInBackground: "+"inside aclling"+stringUrl );
             String result="ERROR";
             String inputLine;
@@ -390,7 +383,6 @@ public class SplashScreenActivity extends AppCompatActivity {
 
                 BufferedReader reader = new BufferedReader(streamReader);
                 StringBuilder stringBuilder = new StringBuilder();
-
 
                 while((inputLine = reader.readLine()) != null){
                     stringBuilder.append(inputLine);

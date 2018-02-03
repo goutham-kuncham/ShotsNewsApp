@@ -176,7 +176,7 @@ public class On_going_Courses_Fragment extends android.support.v4.app.Fragment {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getContext(),"Error response ",Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getContext(),"Error response ",Toast.LENGTH_SHORT).show();
                     }
                 });
                 RequestQueue queue= Volley.newRequestQueue(getContext());

@@ -105,7 +105,9 @@ public class TestLoginActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
+                    Log.d("LoginTest", "onClick: ");
                     v.startAnimation(buttonClick);
+                    Log.d("LoginTest", "onClick: #2");
 
 
                     // loginbtn.setBackgroundColor(Color.BLUE);
@@ -125,7 +127,7 @@ public class TestLoginActivity extends AppCompatActivity {
     private void login() {
 
         AutoCompleteTextView usernametxt= (AutoCompleteTextView) findViewById(R.id.username);
-        String username=usernametxt.getText().toString();
+        String username=usernametxt.getText().toString().trim();
 
         EditText passwordtxt=(EditText)findViewById(R.id.password);
         String password=passwordtxt.getText().toString();
@@ -134,18 +136,12 @@ public class TestLoginActivity extends AppCompatActivity {
         Log.e("mytag","1");
 
 
-        if(isNetworkAvailable()) {
-
-
-                 {
-
-                Log.e("mytag", "");
-
+        if(isNetworkAvailable())
+        {
+            {
+                Log.e("mytag", "isNetworkAvailable");
                 try {
-                    Log.e("mytag", "3");
-
                     LOGIN_result = new SignInValidation().execute(API_URL).get();
-
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {
@@ -194,7 +190,6 @@ public class TestLoginActivity extends AppCompatActivity {
             {
                 Log.e("mytag", "3");
                 Toast.makeText(this, "Network Not available", Toast.LENGTH_LONG).show();
-
             }
 
     }
