@@ -5,4 +5,4 @@ So, based on saas model; we built “Kaas” - Knowledge as a service.
 
 With shots the employees can get real-time customized news/updates about the cutting edge technologies. There is aslo dedicated learning arena where people can learn and improve their technical and personal skills with fun and rewards.
 
-![learn_homepage](https://user-images.githubusercontent.com/23627458/143766693-41f7b16d-3f60-42cf-acce-aa7ae185837b.jpeg)
+![learn_homepage_resize](https://user-images.githubusercontent.com/23627458/143766788-6fdc00ad-b861-4e66-a169-42833462f9a0.jpg)
